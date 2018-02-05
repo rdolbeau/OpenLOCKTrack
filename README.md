@@ -17,7 +17,7 @@ The STL files are licensed CC-BY-NC (https://creativecommons.org/licenses/by-nc/
 
 The Inkscape files are also licensed CC-BY-NC, same as the texture they include (from https://github.com/caitlynb/OpenSCAD-OpenLock).
 
-All other files are also licensed CC-BY-NC, as it makes things a lot easier to have ervything under the same license.
+All other files are also licensed CC-BY-NC, as it makes things a lot easier to have everything under the same license.
 
 
 ## The logic behind the tiles
@@ -37,7 +37,7 @@ The current tiles are limited by the availability of OpenLOCK base. For instance
 The bases are the reference bases for OpenLOCK, imported as-is in OpenSCAD. The Grass and Cobble texture are from the OpenSCAD-OpenLock
  project (https://github.com/caitlynb/OpenSCAD-OpenLock).
 
-The surface is designed using Inkscape to create a heightmap in greyscale. This heightmap is converted to an object using the OpenSCAD surface() operator. Then it is stacked on the top of the proper OpenLOCK tile to created the finished piece. Some post-processing of the PNG file before OpenSCAD allows for some fun modifications without too much hassle (potholes, corner banking, soft ramps, ...)
+The surface is designed using Inkscape to create a height-map in grey-scale. This height-map is converted to an object using the OpenSCAD surface() operator. Then it is stacked on the top of the proper OpenLOCK tile to created the finished piece. Some post-processing of the PNG file before OpenSCAD allows for some fun modifications without too much hassle (potholes, corner banking, soft ramps, ...)
 
 ### The detailed stuff
 
@@ -45,7 +45,7 @@ The surface is designed using Inkscape to create a heightmap in greyscale. This 
 
 The Inkscape drawing is exported to a PNG bitmap using the export tool. 
 
-The auto-generator takes the PNG name as input, and generates the OpenSCAD code using the appropriate OpenLOCK base for the size - an EA tile for 3x3, an U tile for 4x4, and so on. Optionnaly, the auto-generator can extract part of the PNG file and fit it on a smaller piece. Smaller piece are faster to print, and the original design may have unnecessary area that need not be printed at all. For instance, a 90 degrees turn on a 4x4 area could be printed as a U piece, a pair of R pieces (4x2 each), a pair of OA pieces (4x4 triangular), or not completely on a V piece (quarter disk) or a pair of Y triangle. The 6x6 90 turn can be printed as a pair of EA (3x3) and a paire of E (2x2), only printing 26 square inches out of the original 36 - the excess 10 square inches only feature scenery, not track.
+The auto-generator takes the PNG name as input, and generates the OpenSCAD code using the appropriate OpenLOCK base for the size - an EA tile for 3x3, an U tile for 4x4, and so on. Optionally, the auto-generator can extract part of the PNG file and fit it on a smaller piece. Smaller piece are faster to print, and the original design may have unnecessary area that need not be printed at all. For instance, a 90 degrees turn on a 4x4 area could be printed as a U piece, a pair of R pieces (4x2 each), a pair of OA pieces (4x4 triangular), or not completely on a V piece (quarter disk) or a pair of Y triangle. The 6x6 90 turn can be printed as a pair of EA (3x3) and a pair of E (2x2), only printing 26 square inches out of the original 36 - the excess 10 square inches only feature scenery, not track.
 
 The auto-generator can also 'raise' the track by increment of 1/4 inch, to allow for raised tracks, jumps, and so on. Non-regular raising can be achieved by processing the PNG file before running the OpenSCAD code.
 
@@ -60,16 +60,16 @@ From bottom to top:
 1. A "black background layer" as a safety net (spurious white pixels would cause very high peak).
 2. One (or more) "texture" layer for the non-track part of the tile. This can be changed at will easily for different texture, either by replacing the texture or by adding a new layer and hiding the other texture layers.
 3. A "road surface" layer (grey 10) where the track is.
-4. A "grid" layer with the embossed 1"x1" and 1/4"x1/4" grids, slightly darker (lower) than the road surface. The gris is a bit transparent, so that it doesn't show too much in the texture where the texture is brighter (higher).
+4. A "grid" layer with the embossed 1"x1" and 1/4"x1/4" grids, slightly darker (lower) than the road surface. The grey is a bit transparent, so that it doesn't show too much in the texture where the texture is brighter (higher).
 5. A "border" layer. Border are currently created by repeating a 0.1" wide pattern along a path. The default pattern is quite light, so it sits on top of a black path 0.1" wide and the pattern is set to 30% opacity.
  
-The default is to use 120 dpi for the exported PNG, which seems to work well. It's possible to use a different resolution, provided the auto-generated and hand-written OpenSCAD files are changed to match the dpi of the PNG file from inkscape. Naming is important, as the auto-generator tool uses it to 'guess' the size of the PNG.
+The default is to use 120 dpi for the exported PNG, which seems to work well. It's possible to use a different resolution, provided the auto-generated and hand-written OpenSCAD files are changed to match the dpi of the PNG file from Inkscape. Naming is important, as the auto-generator tool uses it to 'guess' the size of the PNG.
 
-The greyscale range of 0 (black) to 255 (white) is projected in OpenSCAD into a 0 to 10 mm height, so each extra 10 of luminance is about 0.4 mm. So adding 162 to the luminance of the PNG raise the track & features by 1/4" (6.35 mm) - the equivalent of a Level. This property is used by the pre-processing tools to create soft ramps (1/4" rise over 3") or potholes (raising eveything by 1/4" and then lowering the potholes) orting a Level 1 piece). Another possible use is banking (raising the outer part of a corner).
+The grey-scale range of 0 (black) to 255 (white) is projected in OpenSCAD into a 0 to 10 mm height, so each extra 10 of luminance is about 0.4 mm. So adding 162 to the luminance of the PNG raise the track & features by 1/4" (6.35 mm) - the equivalent of a Level. This property is used by the pre-processing tools to create soft ramps (1/4" rise over 3") or potholes (raising everything by 1/4" and then lowering the potholes, creating a Lvl 1 piece). Another possible use is banking (raising the outer part of a corner).
 
 #### The auto-generator
 
-The auto-generator takes the name of a PNG file (the name must start as MxN with M the width and N the length of the PNG, i.e. 3x3 for a 3"x3" PNG). It outputs the OpenSCAD using that file, picking the appropriate OpenLOCK base. Optionaly, it can extract only some of the PNG (a rectangular piece at an offset) and put it on a base appropriate for the extracted part. It can also do some specific cuttings for Y, OA or V base. It can also change the level for the whole piece.
+The auto-generator takes the name of a PNG file (the name must start as MxN with M the width and N the length of the PNG, i.e. 3x3 for a 3"x3" PNG). It outputs the OpenSCAD using that file, picking the appropriate OpenLOCK base. Optionally, it can extract only some of the PNG (a rectangular piece at an offset) and put it on a base appropriate for the extracted part. It can also do some specific cuttings for Y, OA or V base. It can also change the level for the whole piece.
 
 It's not very well documented, and it's not very pretty C code. But it does the job :-)
 
