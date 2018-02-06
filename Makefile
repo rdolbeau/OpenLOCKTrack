@@ -25,7 +25,8 @@ STLS=	3x3Crossing_auto_0.stl \
 	4x4Turn90Banked_auto_0.stl \
 	4x4Yinter90_auto_0.stl \
 	4x4Yinter90Raised_auto_0.stl \
-	3x3SmoothRamp_auto_0.stl
+	3x3SmoothRamp_auto_0.stl \
+	3x3StraightIntoBankingRight_auto_0.stl 3x3StraightIntoBankingLeft_auto_0.stl
 
 STL1S=	3x3Crossing_auto_1.stl \
 	3x3Straight_auto_1.stl \
@@ -40,6 +41,7 @@ STL1S=	3x3Crossing_auto_1.stl \
 	4x4Turn90BankedE_auto_1.stl \
 	4x4Turn90Banked_auto_1.stl \
 	4x4Yinter90_auto_1.stl \
+	3x3StraightIntoBankingRight_auto_1.stl 3x3StraightIntoBankingLeft_auto_1.stl \
 	3x3StraightPotholes_auto_1.stl
 
 # STL from manual scad
@@ -173,6 +175,15 @@ PNGFilter_4x4Turn90BankingDbleDepth: PNGFilter_main.c PNGFilter_4x4Turn90Banking
 	./PNGFilter_4x4Turn90BankingDbleDepth $< $@
 4x4Turn90BankedDbleDepth_auto_0.scad: 4x4Turn90BankedDbleDepth.png
 	./gen_scad -d $(DPI) -s 0.2 $^
+
+
+PNGFilter_3x3StraightIntoBanking: PNGFilter_main.c PNGFilter_3x3StraightIntoBanking.c
+	$(CC) $(CFLAGS) $^ -o $@ -lpng -lm
+
+3x3StraightIntoBankingRight.png: 3x3Straight.png PNGFilter_3x3StraightIntoBanking
+	./PNGFilter_3x3StraightIntoBanking $< $@
+3x3StraightIntoBankingLeft.png: 3x3Straight.png PNGFilter_3x3StraightIntoBanking
+	./PNGFilter_3x3StraightIntoBanking $< $@ -m
 
 
 # Generate PNG from the SVG

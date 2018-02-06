@@ -21,7 +21,7 @@
 
 #include "PNGFilter_main.h"
 
-#define FNAME "filter4x4Yinter90raisesplitto1"
+#define FNAME "PNGFilter_4x4Turn90Banking"
 
 void filter(pngstruct *png, int argc, char **argv) {
 	char c;
@@ -81,7 +81,7 @@ void filter(pngstruct *png, int argc, char **argv) {
 				ptr[0] += offset;
 				ptr[1] += offset;
 				ptr[2] += offset;
-			}
+			} else
 			if ((dist >= (3.5*dpi)) && (dist <= (3.6*dpi))) { // raise outer border
 				double doffset = bankingheight;
 				if (taperb && (angle <= alimit)) {
@@ -94,7 +94,7 @@ void filter(pngstruct *png, int argc, char **argv) {
                                 ptr[0] += offset;
                                 ptr[1] += offset;
                                 ptr[2] += offset;
-			}
+			} else
                         if ((dist >= (3.6*dpi)) && (dist< (4.0*dpi))) { // remove cliff by sloping the texture
 				double ldist = dist - 3.6 * dpi;
 				double doffset = bankingheight * (cos(M_PI*(ldist/(0.4*dpi)))+1.)/2.;

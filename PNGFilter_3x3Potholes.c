@@ -21,7 +21,7 @@
 
 #include "PNGFilter_main.h"
 
-#define FNAME "filter3x3Potholes"
+#define FNAME "PNGFilter_3x3Potholes"
 
 void filter(pngstruct *png, int argc, char **argv) {
  	char c;

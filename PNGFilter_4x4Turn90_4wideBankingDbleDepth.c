@@ -21,7 +21,7 @@
 
 #include "PNGFilter_main.h"
 
-#define FNAME "filter4x4Yinter90raisesplitto1"
+#define FNAME "PNGFilter_4x4Turn90_4wideBankingDbleDepth"
 
 void filter(pngstruct *png, int argc, char **argv) {
 	char c;
