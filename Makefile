@@ -17,8 +17,8 @@ STLS=	3x3Crossing_auto_0.stl \
 	4x4Turn90_auto_0Y1.stl 4x4Turn90_auto_0Y2.stl \
 	4x4Turn90_auto_0OA1.stl 4x4Turn90_auto_0OA2.stl \
 	4x4Turn90_auto_0V.stl \
-	4x4Side1_auto_0cx2.0cy4.0mx2.0.stl 4x4Side1_auto_0cx2.0cy4.0.stl \
-	6x6Turn90_auto_0cx2.0cy2.0mx1.0my1.0.stl 6x6Turn90_auto_0cx2.0cy2.0mx3.0my3.0.stl 6x6Turn90_auto_0cx3.0cy3.0mx3.0.stl 6x6Turn90_auto_0cx3.0cy3.0my3.0.stl \
+	4x2-4x4Side1Part1_auto_0.stl 4x2-4x4Side1Part2_auto_0.stl \
+	2x2-6x6Turn90Part1_auto_0.stl 2x2-6x6Turn90Part2_auto_0.stl 3x3-6x6Turn90Part3_auto_0.stl 3x3-6x6Turn90Part4_auto_0.stl \
 	4x4Turn90BankedBE_auto_0.stl \
 	4x4Turn90BankedB_auto_0.stl \
 	4x4Turn90BankedE_auto_0.stl \
@@ -33,8 +33,8 @@ STL1S=	3x3Crossing_auto_1.stl \
 	4x4Turn90_auto_1Y1.stl 4x4Turn90_auto_1Y2.stl \
 	4x4Turn90_auto_1OA1.stl 4x4Turn90_auto_1OA2.stl \
 	4x4Turn90_auto_1V.stl \
-	4x4Side1_auto_1cx2.0cy4.0mx2.0.stl 4x4Side1_auto_1cx2.0cy4.0.stl \
-	6x6Turn90_auto_1cx2.0cy2.0mx1.0my1.0.stl 6x6Turn90_auto_1cx2.0cy2.0mx3.0my3.0.stl 6x6Turn90_auto_1cx3.0cy3.0mx3.0.stl 6x6Turn90_auto_1cx3.0cy3.0my3.0.stl \
+	4x2-4x4Side1Part1_auto_1.stl 4x2-4x4Side1Part2_auto_1.stl \
+	2x2-6x6Turn90Part1_auto_1.stl 2x2-6x6Turn90Part2_auto_1.stl 3x3-6x6Turn90Part3_auto_1.stl 3x3-6x6Turn90Part4_auto_1.stl \
 	4x4Turn90BankedBE_auto_1.stl \
 	4x4Turn90BankedB_auto_1.stl \
 	4x4Turn90BankedE_auto_1.stl \
@@ -68,35 +68,21 @@ allstl: $(STLS) $(STL1S) $(EXTRASTLS)
 ## some usefule split for easier printing
 # This one uses only 26 square inches instead of 36
 # by using 2 EA and 2 E pieces (instead of a 6x6)
-6x6Turn90_auto_0cx2.0cy2.0mx1.0my1.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 2 -y 2 -X 1 -Y 1 $^
-6x6Turn90_auto_0cx2.0cy2.0mx3.0my3.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 2 -y 2 -X 3 -Y 3 $^
-6x6Turn90_auto_0cx3.0cy3.0mx3.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 3 -y 3 -X 3 -Y 0 $^
-6x6Turn90_auto_0cx3.0cy3.0my3.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 3 -y 3 -X 0 -Y 3 $^
-
-6x6Turn90_auto_1cx2.0cy2.0mx1.0my1.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 2 -y 2 -X 1 -Y 1 -L 1 $^
-6x6Turn90_auto_1cx2.0cy2.0mx3.0my3.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 2 -y 2 -X 3 -Y 3 -L 1 $^
-6x6Turn90_auto_1cx3.0cy3.0mx3.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 3 -y 3 -X 3 -Y 0 -L 1 $^
-6x6Turn90_auto_1cx3.0cy3.0my3.0.scad: 6x6Turn90.png
-	./gen_scad -d $(DPI) -x 3 -y 3 -X 0 -Y 3 -L 1 $^
+2x2-6x6Turn90Part1.png: 6x6Turn90.png
+	convert $< -crop 240x240+120+120 $@
+2x2-6x6Turn90Part2.png: 6x6Turn90.png
+	convert $< -crop 240x240+360+360 $@
+3x3-6x6Turn90Part3.png: 6x6Turn90.png
+	convert $< -crop 360x360+360+0 $@
+3x3-6x6Turn90Part4.png: 6x6Turn90.png
+	convert $< -crop 360x360+0+360 $@
 
 
 # cut an U piece into 2 R pieces
-4x4Side1_auto_0cx2.0cy4.0mx2.0.scad: 4x4Side1.png
-	./gen_scad -d $(DPI) -x 2 -y 4 -X 2 -Y 0 $^
-4x4Side1_auto_0cx2.0cy4.0.scad: 4x4Side1.png
-	./gen_scad -d $(DPI) -x 2 -y 4 -X 0 -Y 0 $^
-
-4x4Side1_auto_1cx2.0cy4.0mx2.0.scad: 4x4Side1.png
-	./gen_scad -d $(DPI) -x 2 -y 4 -X 2 -Y 0 -L 1 $^
-4x4Side1_auto_1cx2.0cy4.0.scad: 4x4Side1.png
-	./gen_scad -d $(DPI) -x 2 -y 4 -X 0 -Y 0 -L 1 $^
+4x2-4x4Side1Part1.png: 4x4Side1.png
+	convert $< -crop 480x240+0+0 $@
+4x2-4x4Side1Part2.png: 4x4Side1.png
+	convert $< -crop 480x240+240+0 $@
 
 
 # cut an U piece into 2 Y pieces - beware loss of surface !

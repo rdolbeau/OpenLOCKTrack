@@ -1,0 +1,7 @@
+*~
+gen_scad
+*.stl
+PNGFilter_3x3Potholes
+PNGFilter_3x3SmoothRamp
+PNGFilter_4x4Turn90Banking
+PNGFilter_4x4Yinter90raisesplitto1
