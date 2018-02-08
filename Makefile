@@ -23,6 +23,7 @@ STLS=	3x3Crossing_auto_0.stl \
 	4x4Turn90BankedB_auto_0.stl \
 	4x4Turn90BankedE_auto_0.stl \
 	4x4Turn90Banked_auto_0.stl \
+	3x3Turn90Banked_auto_0.stl \
 	4x4Yinter90_auto_0.stl \
 	4x4Yinter90Raised_auto_0.stl \
 	3x3SmoothRamp_auto_0.stl \
@@ -40,6 +41,7 @@ STL1S=	3x3Crossing_auto_1.stl \
 	4x4Turn90BankedB_auto_1.stl \
 	4x4Turn90BankedE_auto_1.stl \
 	4x4Turn90Banked_auto_1.stl \
+	3x3Turn90Banked_auto_1.stl \
 	4x4Yinter90_auto_1.stl \
 	3x3StraightIntoBankingRight_auto_1.stl 3x3StraightIntoBankingLeft_auto_1.stl \
 	3x3StraightPotholes_auto_1.stl
@@ -164,18 +166,20 @@ PNGFilter_4x4Turn90BankingDbleDepth: PNGFilter_main.c PNGFilter_4x4Turn90Banking
 
 
 4x4Turn90BankedBE.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -b -e
+	./PNGFilter_4x4Turn90Banking $< $@ -b -e -s 4
 4x4Turn90BankedB.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -b
+	./PNGFilter_4x4Turn90Banking $< $@ -b -s 4
 4x4Turn90BankedE.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -e
+	./PNGFilter_4x4Turn90Banking $< $@ -e -s 4
 4x4Turn90Banked.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@
+	./PNGFilter_4x4Turn90Banking $< $@ -s 4
 4x4Turn90BankedDbleDepth.png: 4x4Turn90.png PNGFilter_4x4Turn90BankingDbleDepth
 	./PNGFilter_4x4Turn90BankingDbleDepth $< $@
 4x4Turn90BankedDbleDepth_auto_0.scad: 4x4Turn90BankedDbleDepth.png
 	./gen_scad -d $(DPI) -s 0.2 $^
 
+3x3Turn90Banked.png: 3x3Turn90.png PNGFilter_4x4Turn90Banking
+	./PNGFilter_4x4Turn90Banking $< $@ -s 3
 
 PNGFilter_3x3StraightIntoBanking: PNGFilter_main.c PNGFilter_3x3StraightIntoBanking.c
 	$(CC) $(CFLAGS) $^ -o $@ -lpng -lm

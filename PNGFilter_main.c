@@ -1,3 +1,13 @@
+/*
+ * Copyright 2002-2011 Guillaume Cottenceau and contributors.
+ * 
+ * Custom Filters Copyright 2018 Romain Dolbeau
+ *
+ * This software may be freely redistributed under the terms
+ * of the X11 license.
+ *
+ */
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -5,7 +15,6 @@
 #include <stdarg.h>
 
 #define PNG_DEBUG 3
-#include <png.h>
 
 #include <math.h>
 
@@ -40,6 +49,9 @@ void read_png_file(const char* file_name, pngstruct *png)
 
         if (!png->png_ptr)
                 abort_("[read_png_file] png_create_read_struct failed");
+	png_set_gray_to_rgb(png->png_ptr);
+	png_set_expand(png->png_ptr);
+        png_set_strip_16(png->png_ptr);
 
         png->info_ptr = png_create_info_struct(png->png_ptr);
         if (!png->info_ptr)
@@ -142,6 +154,7 @@ void write_png_file(const char* file_name, pngstruct *png)
 int main(int argc, char **argv)
 {
 	pngstruct png;
+#ifndef PNG_SYNTH
         if (argc < 3)
                 abort_("Usage: program_name <file_in> <file_out>  [<filter_options>]");
 	{
@@ -152,6 +165,16 @@ int main(int argc, char **argv)
 		filter(&png, argc, argv);
 		write_png_file(out, &png);
 	}
+#else
+        if (argc < 2)
+                abort_("Usage: program_name <file_out>  [<synth_options>]");
+	{
+		const char *out = strndup(argv[1], 4096);
+
+		synth(&png, argc, argv);
+		write_png_file(out, &png);
+	}
+#endif
 
         return 0;
 }

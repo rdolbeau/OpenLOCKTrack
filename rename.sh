@@ -45,6 +45,8 @@ update 4x4Turn90BankedB_auto_0.stl $SUBDIR/OA-$DEV-4Turn90BankedB-Lvl0-v$VER.stl
 update 4x4Turn90BankedBE_auto_0.stl $SUBDIR/OA-$DEV-4Turn90BankedBE-Lvl0-v$VER.stl.bz2
 update 4x4Turn90BankedE_auto_0.stl $SUBDIR/OA-$DEV-4Turn90BankedE-Lvl0-v$VER.stl.bz2
 
+update 3x3Turn90Banked_auto_0.stl $SUBDIR/EA-$DEV-3Turn90Banked-Lvl0-v$VER.stl.bz2
+
 update 3x3StraightIntoBankingLeft_auto_0.stl $SUBDIR/EA-$DEV-StraightIntoBankingLeft-Lvl0-v$VER.stl.bz2
 update 3x3StraightIntoBankingRight_auto_0.stl $SUBDIR/EA-$DEV-StraightIntoBankingRight-Lvl0-v$VER.stl.bz2
 
@@ -78,6 +80,8 @@ update 4x4Turn90Banked_auto_1.stl $SUBDIR/OA-$DEV-4Turn90Banked-Lvl1-v$VER.stl.b
 update 4x4Turn90BankedB_auto_1.stl $SUBDIR/OA-$DEV-4Turn90BankedB-Lvl1-v$VER.stl.bz2
 update 4x4Turn90BankedBE_auto_1.stl $SUBDIR/OA-$DEV-4Turn90BankedBE-Lvl1-v$VER.stl.bz2
 update 4x4Turn90BankedE_auto_1.stl $SUBDIR/OA-$DEV-4Turn90BankedE-Lvl1-v$VER.stl.bz2
+
+update 3x3Turn90Banked_auto_1.stl $SUBDIR/EA-$DEV-3Turn90Banked-Lvl1-v$VER.stl.bz2
 
 update 3x3StraightIntoBankingLeft_auto_1.stl $SUBDIR/EA-$DEV-StraightIntoBankingLeft-Lvl1-v$VER.stl.bz2
 update 3x3StraightIntoBankingRight_auto_1.stl $SUBDIR/EA-$DEV-StraightIntoBankingRight-Lvl1-v$VER.stl.bz2
