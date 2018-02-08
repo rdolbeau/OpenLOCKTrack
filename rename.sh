@@ -3,7 +3,7 @@
 SUBDIR=export
 BZIP2="bzip2 -c"
 DEV=RDO
-VER=0.9
+VER=1.0
 
 #/bin/rm -rf $SUBDIR
 

@@ -51,15 +51,13 @@ EXTRASTLS=3x1CheckPoint.stl 3x1Ramp0_1.stl 3x1Ramp0_2.stl 3x1Ramp1_2.stl
 
 SCADS=$(STLS:.stl=.scad) $(STL1S:.stl=.scad)
 
-SVGS=3x3Crossing.svg 3x3Turn90.svg 4x4Turn90.svg 5x5Side2.svg 6x6Turn90.svg 3x3Straight.svg 4x4Side1.svg 4x4Yinter90.svg 6x6Side2.svg
-
-GENPNGS=$(SVGS:%.svg=%.png)
+GENPNGS=3x3Straight.png 3x3Crossing.png 3x3Turn90.png 4x4Side1.png 6x6Turn90.png 4x4Yinter90.png
 
 # generate the OpenSCAD files
 allscad: gen_scad $(SCADS)
 
 # convert scad to stl (IT TAKES A LOT OF MEMORY !)
-allstl: $(STLS) $(STL1S) $(EXTRASTLS)
+allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 
 # default rule for the simple stuff, using
 # a PNG on a regular OpenLOCK piece
@@ -86,7 +84,7 @@ allstl: $(STLS) $(STL1S) $(EXTRASTLS)
 4x2-4x4Side1Part1.png: 4x4Side1.png
 	convert $< -crop 480x240+0+0 $@
 4x2-4x4Side1Part2.png: 4x4Side1.png
-	convert $< -crop 480x240+240+0 $@
+	convert $< -crop 480x240+0+240 $@
 
 
 # cut an U piece into 2 Y pieces - beware loss of surface !
@@ -106,21 +104,25 @@ allstl: $(STLS) $(STL1S) $(EXTRASTLS)
 
 
 # trim a U piece to a V piece
-4x4Turn90_auto_0V.scad : 4x4Turn90.png
+4x4Turn90_auto_0V.scad: 4x4Turn90.png
 	./gen_scad -d $(DPI) -T V $<
 
-4x4Turn90_auto_1V.scad : 4x4Turn90.png
+4x4Turn90_auto_1V.scad: 4x4Turn90.png
 	./gen_scad -d $(DPI) -T V -L 1 $<
 
 # variable-height ramps on SA pieces (STL)
-3x1Ramp0_1.stl: 3x1Ramp0_1.scad
-	$(OPENSCAD) -Dlow=0 -Dheight=1 $^ -o $@
+3x1Ramp0_1.stl: 3x1Ramp0_1.scad 3x3Straight.png
+	$(OPENSCAD) -Dlow=0 -Dheight=1 $< -o $@
 
-3x1Ramp0_2.stl: 3x1Ramp0_1.scad
-	$(OPENSCAD) -Dlow=0 -Dheight=2 $^ -o $@
+3x1Ramp0_2.stl: 3x1Ramp0_1.scad 3x3Straight.png
+	$(OPENSCAD) -Dlow=0 -Dheight=2 $< -o $@
 
-3x1Ramp1_2.stl: 3x1Ramp0_1.scad
-	$(OPENSCAD) -Dlow=1 -Dheight=1 $^ -o $@
+3x1Ramp1_2.stl: 3x1Ramp0_1.scad 3x3Straight.png
+	$(OPENSCAD) -Dlow=1 -Dheight=1 $< -o $@
+
+# checkpoint
+3x1CheckPoint.stl: 3x1CheckPoint.scad 3x3Straight.png
+	$(OPENSCAD) $< -o $@
 
 # Potholes - there use -L 0 but are Lvl1 because of the post-processing
 3x3StraightPotholes_auto_1.scad: 3x3StraightPotholes.png
@@ -190,6 +192,27 @@ PNGFilter_3x3StraightIntoBanking: PNGFilter_main.c PNGFilter_3x3StraightIntoBank
 	./PNGFilter_3x3StraightIntoBanking $< $@ -m
 
 
-# Generate PNG from the SVG
-%.png: %.svg
-	$(INKSCAPE) -f $< -e $@ -d $(DPI)
+# Procedurally generate PNG
+PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support.c
+	$(CC) $(CFLAGS) -fopenmp -DPNG_SYNTH -lpng -lgsl -lgslcblas -lm $^ -o $@
+
+3x3Straight.png: PNGSynth
+	./PNGSynth $@ -f straight -t 2 -l 3 -w 3
+
+3x3Crossing.png: PNGSynth
+	./PNGSynth $@ -f straight -T -f straight -T -t 2 -l 3 -w 3
+
+3x3Turn90.png: PNGSynth
+	./PNGSynth $@ -f turn90 -t 2 -l 3 -w 3
+
+4x4Turn90.png: PNGSynth
+	./PNGSynth $@ -f turn90 -t 2 -l 4 -w 4
+
+4x4Side1.png: PNGSynth
+	./PNGSynth $@ -f side -t 2 -l 4 -w 4
+
+6x6Turn90.png: PNGSynth
+	./PNGSynth $@ -f turn90 -t 2 -l 6 -w 6
+
+4x4Yinter90.png: PNGSynth
+	./PNGSynth $@ -f turn90 -f straight -t 2 -l 4 -w 4
