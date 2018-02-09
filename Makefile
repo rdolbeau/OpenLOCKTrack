@@ -17,6 +17,7 @@ STLS=	3x3Crossing_auto_0.stl \
 	4x4Turn90_auto_0Y1.stl 4x4Turn90_auto_0Y2.stl \
 	4x4Turn90_auto_0OA1.stl 4x4Turn90_auto_0OA2.stl \
 	4x4Turn90_auto_0V.stl \
+	2x2-4x4Turn90Part1_auto_0.stl 2x2-4x4Turn90Part2_auto_0.stl 2x2-4x4Turn90Part3_auto_0.stl 2x2-4x4Turn90Part4_auto_0.stl 2x2-4x4Turn90Part1_turret0x0_auto_0.stl \
 	4x2-4x4Side1Part1_auto_0.stl 4x2-4x4Side1Part2_auto_0.stl \
 	2x2-6x6Turn90Part1_auto_0.stl 2x2-6x6Turn90Part2_auto_0.stl 3x3-6x6Turn90Part3_auto_0.stl 3x3-6x6Turn90Part4_auto_0.stl \
 	4x4Turn90BankedBE_auto_0.stl \
@@ -79,6 +80,18 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 3x3-6x6Turn90Part4.png: 6x6Turn90.png
 	convert $< -crop 360x360+0+360 $@
 
+# 4x4 Turn90 in 4 pieces, with an optional turret
+2x2-4x4Turn90Part1.png: 4x4Turn90.png
+	convert $< -crop 240x240+0+0 $@
+2x2-4x4Turn90Part2.png: 4x4Turn90.png
+	convert $< -crop 240x240+240+0 $@
+2x2-4x4Turn90Part3.png: 4x4Turn90.png
+	convert $< -crop 240x240+0+240 $@
+2x2-4x4Turn90Part4.png: 4x4Turn90.png
+	convert $< -crop 240x240+240+240 $@
+
+2x2-4x4Turn90Part1_turret0x0_auto_0.scad: 2x2-4x4Turn90Part1.png gen_scad
+	./gen_scad -d $(DPI) -t 0x0 $<
 
 # cut an U piece into 2 R pieces
 4x2-4x4Side1Part1.png: 4x4Side1.png
@@ -110,18 +123,25 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 4x4Turn90_auto_1V.scad: 4x4Turn90.png
 	./gen_scad -d $(DPI) -T V -L 1 $<
 
+1x3Straight.png: 3x3Straight.png
+	convert $< -crop 120x360+0+0 $@
+
+3x1Straight.png: 3x3Straight.png
+	convert $< -crop 120x360+0+0 -rotate 90 $@
+
+
 # variable-height ramps on SA pieces (STL)
-3x1Ramp0_1.stl: 3x1Ramp0_1.scad 3x3Straight.png
+3x1Ramp0_1.stl: 3x1Ramp0_1.scad 3x1Straight.png
 	$(OPENSCAD) -Dlow=0 -Dheight=1 $< -o $@
 
-3x1Ramp0_2.stl: 3x1Ramp0_1.scad 3x3Straight.png
+3x1Ramp0_2.stl: 3x1Ramp0_1.scad 3x1Straight.png
 	$(OPENSCAD) -Dlow=0 -Dheight=2 $< -o $@
 
-3x1Ramp1_2.stl: 3x1Ramp0_1.scad 3x3Straight.png
+3x1Ramp1_2.stl: 3x1Ramp0_1.scad 3x1Straight.png
 	$(OPENSCAD) -Dlow=1 -Dheight=1 $< -o $@
 
 # checkpoint
-3x1CheckPoint.stl: 3x1CheckPoint.scad 3x3Straight.png
+3x1CheckPoint.stl: 3x1CheckPoint.scad 3x1Straight.png
 	$(OPENSCAD) $< -o $@
 
 # Potholes - there use -L 0 but are Lvl1 because of the post-processing

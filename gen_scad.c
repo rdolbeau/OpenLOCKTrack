@@ -231,6 +231,10 @@ fprintf(out, "}\n");
         fprintf(out, "}\n"); // union
 }
 
+void addturretbasescad(FILE *out, const int x, const int y) {
+fprintf(out, "translate(v=[-2+%d*myinch,-15+(2-%d)*myinch,7]) {scale(v=[2/3,2/3,2/3]) { import(\"death_star_assembly_1.1.stl\");}}\n", x, y);
+}
+
 int findsizes(float *fx, float *fy, const char *file) {
 	int r = sscanf(file, "%fx%f", fx, fy);
 	/* 	printf("%s: %d (%d, %d)\n", file, r, *fx, *fy); */
@@ -256,8 +260,10 @@ int main(int argc, char **argv) {
 	int layer = 0; // 1/4" each
 	int namelayer = -1;
 	float depthscale = .1;
+	int turret = 0;
+	int pturret[2];
 	
-	while ((c = getopt (argc, argv, "d:x:y:X:Y:T:L:E:s:")) != -1) {
+	while ((c = getopt (argc, argv, "d:x:y:X:Y:T:L:E:s:t:")) != -1) {
 		switch (c)
 		{
 		case 'd':
@@ -327,6 +333,15 @@ int main(int argc, char **argv) {
                                 fprintf(stderr, "Depthscale of %f doesn't make sense to me\n", depthscale);
                                 exit(-1);
                         }
+			break;
+		case 't':
+			turret = sscanf(optarg, "%dx%d", &pturret[0], &pturret[1]);
+			if ((turret == 2) && (pturret[0]>=0) && (pturret[0]<10) && (pturret[1]>=0) && (pturret[1]<10)) {
+				turret = 1;
+			} else {
+				fprintf(stderr, "Turret position of (%dx%d [%d]) doesn't make sense to me\n", pturret[0], pturret[1], turret);
+				exit(-1);
+			}
 			break;
 		default:
 			return -1;
@@ -424,6 +439,7 @@ int main(int argc, char **argv) {
 				char cropyname[128];
 				char movxname[128];
 				char movyname[128];
+				char turretname[128];
 				if (cropx != -1.) {
 					snprintf(cropxname, 128, "cx%3.1f", cropx);
 				} else cropxname[0] = '\0';
@@ -436,13 +452,19 @@ int main(int argc, char **argv) {
 				if (movy != 0.) {
 					snprintf(movyname, 128, "my%3.1f", movy);
 				} else movyname[0] = '\0';
-				snprintf(outname, 4096, "%s_auto_%d%s%s%s%s.scad", files[i],
+				snprintf(turretname, 128, "_turret%dx%d", pturret[0], pturret[1]);
+				snprintf(outname, 4096, "%s%s_auto_%d%s%s%s%s.scad", files[i],
+					 turret ? turretname : "",
 					 namelayer,
 					 cropxname, cropyname,
 					 movxname, movyname);
 				FILE* out = fopen(outname, "w");
 				printf("Cropping to %3.1f %3.1f \n", rcropx, rcropy);
 				printscad(out, ol, files[i], layer, dpi, fx, fy, -movx, movy, rcropx, rcropy, rotate, depthscale);
+				if (turret) {
+					printf("Adding turret in %dx%d\n", pturret[0], pturret[1]);
+					addturretbasescad(out, pturret[0], pturret[1]);
+				}
 				fclose(out);
 			} else {
 				fprintf(stderr, "Coudn't find an OpenLock base for '%s'\n", files[i]);

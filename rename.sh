@@ -50,6 +50,11 @@ update 3x3Turn90Banked_auto_0.stl $SUBDIR/EA-$DEV-3Turn90Banked-Lvl0-v$VER.stl.b
 update 3x3StraightIntoBankingLeft_auto_0.stl $SUBDIR/EA-$DEV-StraightIntoBankingLeft-Lvl0-v$VER.stl.bz2
 update 3x3StraightIntoBankingRight_auto_0.stl $SUBDIR/EA-$DEV-StraightIntoBankingRight-Lvl0-v$VER.stl.bz2
 
+update 2x2-4x4Turn90Part1_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part1-Lvl0-v$VER.stl.bz2
+update 2x2-4x4Turn90Part1_turret0x0_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part1-Turret-Lvl0-v$VER.stl.bz2
+update 2x2-4x4Turn90Part2_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part2-Lvl0-v$VER.stl.bz2
+update 2x2-4x4Turn90Part3_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part3-Lvl0-v$VER.stl.bz2
+update 2x2-4x4Turn90Part4_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part4-Lvl0-v$VER.stl.bz2
 
 # Lvl 1
 update 3x3Crossing_auto_1.stl $SUBDIR/EA-$DEV-Crossing-Lvl1-v$VER.stl.bz2

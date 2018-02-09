@@ -86,13 +86,15 @@ void synth(pngstruct *png, int argc, char **argv) {
 	double trackwidth = 2.;
 	const char * fname;
 	int transpose = 0;
+	int mirror = 0;
 	int x,y;
 	int lf[10];
 	int tr[10];
+	int mi[10];
 	int lfs = 0;
 	int nf;
 
-	while ((c = getopt (argc, argv, "d:w:l:gt:f:T")) != -1) {
+	while ((c = getopt (argc, argv, "d:w:l:gt:f:TM")) != -1) {
 		switch (c)
 		{
 		case 'd':
@@ -117,10 +119,14 @@ void synth(pngstruct *png, int argc, char **argv) {
 				abort_("Don't know function '%s'\n", fname);
 			lf[lfs] = nf;
 			tr[lfs] = transpose;
+			mi[lfs] = mirror;
 			lfs++;
 			break;
 		case 'T':
 			transpose = !transpose;
+			break;
+		case 'M':
+			mirror = !mirror;
 			break;
 		default:
 			abort_("Unknown option to Synth");
@@ -155,6 +161,8 @@ void synth(pngstruct *png, int argc, char **argv) {
 		all_track_fun[lf[nf]].init(&fun[nf], width, length, trackwidth);
 	}
 
+	int byinches[length][width];
+	memset(byinches, 0, sizeof(int)*width*length);
 	for (y=0; y<png->height; y++) {
                 png_byte* row = png->row_pointers[y];
 #pragma omp parallel for default(shared) private(x)
@@ -165,11 +173,14 @@ void synth(pngstruct *png, int argc, char **argv) {
 			for (lnf = 0 ; lnf < lfs ; lnf++) {
 				fun_type lfun;
 				memcpy(&lfun, &fun[lnf], sizeof(fun_type));
+				int lx = x;
+				if (mi[lnf])
+					lx = png->width-x;
 				if (!tr[lnf]) {
-					lfun.x = (double)x/(double)dpi;
+					lfun.x = (double)lx/(double)dpi;
 					lfun.y = (double)y/(double)dpi;
 				} else {
-					lfun.y = (double)x/(double)dpi;
+					lfun.y = (double)lx/(double)dpi;
 					lfun.x = (double)y/(double)dpi;
 				}
 				double m2 = min_dist(&lfun);
@@ -182,6 +193,7 @@ void synth(pngstruct *png, int argc, char **argv) {
 					ptr[0] = 10;
 					ptr[1] = 10;
 					ptr[2] = 10;
+					byinches[x/dpi][y/dpi] = 1;
 				} else if (m <= (trackwidth/2.+0.1)) {
 					// hard border
 					double offset = sin(10. * ((trackwidth/2.+0.1)-m) * M_PI);
@@ -196,4 +208,13 @@ void synth(pngstruct *png, int argc, char **argv) {
 	// grid
 	if (dogrid)
 		grid(png, dpi);
+
+#if 0
+	for (x = 0 ; x < width ; x++) {
+		for (y = 0 ; y < length ; y++) {
+			printf("\t%d", byinches[x][y]);
+		}
+		printf("\n");
+	}
+#endif
 }
