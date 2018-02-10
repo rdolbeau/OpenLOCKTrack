@@ -55,18 +55,18 @@ SCADS=$(STLS:.stl=.scad) $(STL1S:.stl=.scad)
 GENPNGS=3x3Straight.png 3x3Crossing.png 3x3Turn90.png 4x4Side1.png 6x6Turn90.png 4x4Yinter90.png
 
 # generate the OpenSCAD files
-allscad: gen_scad $(SCADS)
+allscad: $(SCADS)
 
 # convert scad to stl (IT TAKES A LOT OF MEMORY !)
 allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 
 # default rule for the simple stuff, using
 # a PNG on a regular OpenLOCK piece
-%_auto_0.scad: %.png
-	./gen_scad -d $(DPI) $^
+%_auto_0.scad: %.png gen_scad
+	./gen_scad -d $(DPI) $<
 
-%_auto_1.scad: %.png
-	./gen_scad -d $(DPI) -L 1 $^
+%_auto_1.scad: %.png gen_scad
+	./gen_scad -d $(DPI) -L 1 $<
 
 ## some usefule split for easier printing
 # This one uses only 26 square inches instead of 36
@@ -101,26 +101,26 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 
 
 # cut an U piece into 2 Y pieces - beware loss of surface !
-4x4Turn90_auto_0Y1.scad 4x4Turn90_auto_0Y2.scad: 4x4Turn90.png
+4x4Turn90_auto_0Y1.scad 4x4Turn90_auto_0Y2.scad: 4x4Turn90.png gen_scad
 	./gen_scad -d $(DPI) -T Y $<
 
-4x4Turn90_auto_1Y1.scad 4x4Turn90_auto_1Y2.scad: 4x4Turn90.png
+4x4Turn90_auto_1Y1.scad 4x4Turn90_auto_1Y2.scad: 4x4Turn90.png gen_scad
 	./gen_scad -d $(DPI) -T Y -L 1 $<
 
 
 # cut an U piece into 2 OA pieces
-4x4Turn90_auto_0OA1.scad 4x4Turn90_auto_0OA2.scad: 4x4Turn90.png
+4x4Turn90_auto_0OA1.scad 4x4Turn90_auto_0OA2.scad: 4x4Turn90.png gen_scad
 	./gen_scad -d $(DPI) -T OA $<
 
-4x4Turn90_auto_1OA1.scad 4x4Turn90_auto_1OA2.scad: 4x4Turn90.png
+4x4Turn90_auto_1OA1.scad 4x4Turn90_auto_1OA2.scad: 4x4Turn90.png gen_scad
 	./gen_scad -d $(DPI) -T OA -L 1 $<
 
 
 # trim a U piece to a V piece
-4x4Turn90_auto_0V.scad: 4x4Turn90.png
+4x4Turn90_auto_0V.scad: 4x4Turn90.png gen_scad
 	./gen_scad -d $(DPI) -T V $<
 
-4x4Turn90_auto_1V.scad: 4x4Turn90.png
+4x4Turn90_auto_1V.scad: 4x4Turn90.png gen_scad
 	./gen_scad -d $(DPI) -T V -L 1 $<
 
 1x3Straight.png: 3x3Straight.png
@@ -145,7 +145,7 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 	$(OPENSCAD) $< -o $@
 
 # Potholes - there use -L 0 but are Lvl1 because of the post-processing
-3x3StraightPotholes_auto_1.scad: 3x3StraightPotholes.png
+3x3StraightPotholes_auto_1.scad: 3x3StraightPotholes.png gen_scad
 	./gen_scad -d $(DPI) -L 0 -E 1 $<
 
 # default rule to generate the STL
@@ -197,8 +197,8 @@ PNGFilter_4x4Turn90BankingDbleDepth: PNGFilter_main.c PNGFilter_4x4Turn90Banking
 	./PNGFilter_4x4Turn90Banking $< $@ -s 4
 4x4Turn90BankedDbleDepth.png: 4x4Turn90.png PNGFilter_4x4Turn90BankingDbleDepth
 	./PNGFilter_4x4Turn90BankingDbleDepth $< $@
-4x4Turn90BankedDbleDepth_auto_0.scad: 4x4Turn90BankedDbleDepth.png
-	./gen_scad -d $(DPI) -s 0.2 $^
+4x4Turn90BankedDbleDepth_auto_0.scad: 4x4Turn90BankedDbleDepth.png gen_scad
+	./gen_scad -d $(DPI) -s 0.2 $<
 
 3x3Turn90Banked.png: 3x3Turn90.png PNGFilter_4x4Turn90Banking
 	./PNGFilter_4x4Turn90Banking $< $@ -s 3
