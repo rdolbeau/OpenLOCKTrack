@@ -30,8 +30,9 @@ void filter(pngstruct *png, int argc, char **argv) {
 	int taperb = 0;
 	int tapere = 0;
 	int size = 4;
+	int tw = 2;
 	
-	while ((c = getopt (argc, argv, "bes:")) != -1) {
+	while ((c = getopt (argc, argv, "bes:t:")) != -1) {
 		switch (c)
 		{
 		case 'b':
@@ -44,6 +45,12 @@ void filter(pngstruct *png, int argc, char **argv) {
 			size = atoi(optarg);
 			if (size < 3 || size > 6) {
 				abort_("Wrong size specified");
+			}
+			break;
+		case 't':
+			tw = atoi(optarg);
+			if (tw < 2 || tw > 6) {
+				abort_("Wrong trackwidth specified");
 			}
 			break;
 		default:
@@ -75,9 +82,9 @@ void filter(pngstruct *png, int argc, char **argv) {
 			double dist = sqrt((double)cx*(double)cx+(double)cy*(double)cy);
 			double angle = acos((double)cy/dist);
 			double angle2 = acos((double)cx/dist);
-			if ((dist >= ((dsize-2.5)*dpi)) && (dist <= ((dsize-0.5)*dpi))) { // banked track
-				double ldist = dist - (dsize-2.5) * dpi;
-				double doffset = bankingheight * (cos(M_PI/2.+M_PI/2.*(1.-ldist/(2.*dpi)))+1.); // 2 is track width?
+			if ((dist >= ((dsize-(tw+0.5))*dpi)) && (dist <= ((dsize-0.5)*dpi))) { // banked track
+				double ldist = dist - (dsize-(tw+0.5)) * dpi;
+				double doffset = bankingheight * (cos(M_PI/2.+M_PI/2.*(1.-ldist/(tw*dpi)))+1.);
 				if (taperb && (angle <= alimit)) {
 					doffset = doffset * (cos(M_PI*(1.-angle/alimit))+1.)/2.;
 				}
