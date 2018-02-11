@@ -20,6 +20,7 @@ STLS=	3x3Crossing_auto_0.stl \
 	4x4Turn90_auto_0V.stl \
 	2x2-4x4Turn90Part1_auto_0.stl 2x2-4x4Turn90Part2_auto_0.stl 2x2-4x4Turn90Part3_auto_0.stl 2x2-4x4Turn90Part4_auto_0.stl 2x2-4x4Turn90Part1_turret0x0_auto_0.stl \
 	2x4-6x4Turn90Part1_auto_0.stl 2x4-6x4Turn90Part2_auto_0.stl 2x4-6x4Turn90Part3_auto_0.stl \
+	2x4-6x4Turn90LPart1_auto_0.stl 2x4-6x4Turn90LPart2_auto_0.stl 2x4-6x4Turn90LPart3_auto_0.stl \
 	4x4Side1_auto_0.stl \
 	4x2-4x4Side1Part1_auto_0.stl 4x2-4x4Side1Part2_auto_0.stl \
 	2x2-6x6Turn90Part1_auto_0.stl 2x2-6x6Turn90Part2_auto_0.stl 3x3-6x6Turn90Part3_auto_0.stl 3x3-6x6Turn90Part4_auto_0.stl \
@@ -42,6 +43,7 @@ STL1S=	3x3Crossing_auto_1.stl \
 	4x4Turn90_auto_1V.stl \
 	2x2-4x4Turn90Part1_auto_1.stl 2x2-4x4Turn90Part2_auto_1.stl 2x2-4x4Turn90Part3_auto_1.stl 2x2-4x4Turn90Part4_auto_1.stl 2x2-4x4Turn90Part1_turret0x0_auto_1.stl \
 	2x4-6x4Turn90Part1_auto_1.stl 2x4-6x4Turn90Part2_auto_1.stl 2x4-6x4Turn90Part3_auto_1.stl \
+	2x4-6x4Turn90LPart1_auto_1.stl 2x4-6x4Turn90LPart2_auto_1.stl 2x4-6x4Turn90LPart3_auto_1.stl \
 	4x4Side1_auto_1.stl \
 	4x2-4x4Side1Part1_auto_1.stl 4x2-4x4Side1Part2_auto_1.stl \
 	2x2-6x6Turn90Part1_auto_1.stl 2x2-6x6Turn90Part2_auto_1.stl 3x3-6x6Turn90Part3_auto_1.stl 3x3-6x6Turn90Part4_auto_1.stl \
@@ -227,6 +229,13 @@ PNGFilter_3x3StraightIntoBanking: PNGFilter_main.c PNGFilter_3x3StraightIntoBank
 2x4-6x4Turn90Part3.png: 6x4Turn90.png
 	convert $< -crop 240x480+480+0 $@
 
+2x4-6x4Turn90LPart1.png: 6x4Turn90L.png
+	convert $< -crop 240x480+0+0 $@
+2x4-6x4Turn90LPart2.png: 6x4Turn90L.png
+	convert $< -crop 240x480+240+0 $@
+2x4-6x4Turn90LPart3.png: 6x4Turn90L.png
+	convert $< -crop 240x480+480+0 $@
+
 # Procedurally generate PNG
 PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support.c
 	$(CC) $(CFLAGS) -fopenmp -DPNG_SYNTH -lpng -lgsl -lgslcblas -lm $^ -o $@
@@ -245,6 +254,9 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 
 6x4Turn90.png: PNGSynth
 	./PNGSynth $@ -f turn90 -t 2 -l 6 -w 4
+
+6x4Turn90L.png: PNGSynth
+	./PNGSynth $@ -M -f turn90 -t 2 -l 6 -w 4
 
 4x4Side1.png: PNGSynth
 	./PNGSynth $@ -f side -t 2 -l 4 -w 4
