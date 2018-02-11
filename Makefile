@@ -14,11 +14,13 @@ gen_scad: gen_scad.c
 STLS=	3x3Crossing_auto_0.stl \
 	3x3Straight_auto_0.stl \
 	3x3Turn90_auto_0.stl \
+	4x4Turn90_auto_0.stl \
 	4x4Turn90_auto_0Y1.stl 4x4Turn90_auto_0Y2.stl \
 	4x4Turn90_auto_0OA1.stl 4x4Turn90_auto_0OA2.stl \
 	4x4Turn90_auto_0V.stl \
 	2x2-4x4Turn90Part1_auto_0.stl 2x2-4x4Turn90Part2_auto_0.stl 2x2-4x4Turn90Part3_auto_0.stl 2x2-4x4Turn90Part4_auto_0.stl 2x2-4x4Turn90Part1_turret0x0_auto_0.stl \
 	2x4-6x4Turn90Part1_auto_0.stl 2x4-6x4Turn90Part2_auto_0.stl 2x4-6x4Turn90Part3_auto_0.stl \
+	4x4Side1_auto_0.stl \
 	4x2-4x4Side1Part1_auto_0.stl 4x2-4x4Side1Part2_auto_0.stl \
 	2x2-6x6Turn90Part1_auto_0.stl 2x2-6x6Turn90Part2_auto_0.stl 3x3-6x6Turn90Part3_auto_0.stl 3x3-6x6Turn90Part4_auto_0.stl \
 	4x4Turn90BankedBE_auto_0.stl \
@@ -34,11 +36,13 @@ STLS=	3x3Crossing_auto_0.stl \
 STL1S=	3x3Crossing_auto_1.stl \
 	3x3Straight_auto_1.stl \
 	3x3Turn90_auto_1.stl \
+	4x4Turn90_auto_1.stl \
 	4x4Turn90_auto_1Y1.stl 4x4Turn90_auto_1Y2.stl \
 	4x4Turn90_auto_1OA1.stl 4x4Turn90_auto_1OA2.stl \
 	4x4Turn90_auto_1V.stl \
 	2x2-4x4Turn90Part1_auto_1.stl 2x2-4x4Turn90Part2_auto_1.stl 2x2-4x4Turn90Part3_auto_1.stl 2x2-4x4Turn90Part4_auto_1.stl 2x2-4x4Turn90Part1_turret0x0_auto_1.stl \
 	2x4-6x4Turn90Part1_auto_1.stl 2x4-6x4Turn90Part2_auto_1.stl 2x4-6x4Turn90Part3_auto_1.stl \
+	4x4Side1_auto_1.stl \
 	4x2-4x4Side1Part1_auto_1.stl 4x2-4x4Side1Part2_auto_1.stl \
 	2x2-6x6Turn90Part1_auto_1.stl 2x2-6x6Turn90Part2_auto_1.stl 3x3-6x6Turn90Part3_auto_1.stl 3x3-6x6Turn90Part4_auto_1.stl \
 	4x4Turn90BankedBE_auto_1.stl \

@@ -22,14 +22,14 @@ update 3x3Straight_auto_0.stl $SUBDIR/EA-$DEV-Straight-Lvl0-v$VER.stl.bz2
 
 update 3x3Turn90_auto_0.stl $SUBDIR/EA-$DEV-Turn90-3-Lvl0-v$VER.stl.bz2
 
+update 4x4Turn90_auto_0.stl $SUBDIR/U-$DEV-Turn90-4-Lvl0-v$VER.stl.bz2
 update 4x4Turn90_auto_0Y1.stl $SUBDIR/Y-$DEV-Turn90-4Part1-Lvl0-v$VER.stl.bz2
 update 4x4Turn90_auto_0Y2.stl $SUBDIR/Y-$DEV-Turn90-4Part2-Lvl0-v$VER.stl.bz2
-
 update 4x4Turn90_auto_0OA1.stl $SUBDIR/OA-$DEV-Turn90-4Part1-Lvl0-v$VER.stl.bz2
 update 4x4Turn90_auto_0OA2.stl $SUBDIR/OA-$DEV-Turn90-4Part2-Lvl0-v$VER.stl.bz2
-
 update 4x4Turn90_auto_0V.stl $SUBDIR/V-$DEV-Turn90-4-Lvl0-v$VER.stl.bz2
 
+update 4x4Side1Part1_auto_0.stl $SUBDIR/U-$DEV-Side1-4-Lvl0-v$VER.stl.bz2
 update 4x2-4x4Side1Part1_auto_0.stl $SUBDIR/R-$DEV-Side1-4Part1-Lvl0-v$VER.stl.bz2
 update 4x2-4x4Side1Part2_auto_0.stl $SUBDIR/R-$DEV-Side1-4Part2-Lvl0-v$VER.stl.bz2
 
@@ -67,14 +67,14 @@ update 3x3Straight_auto_1.stl $SUBDIR/EA-$DEV-Straight-Lvl1-v$VER.stl.bz2
 
 update 3x3Turn90_auto_1.stl $SUBDIR/EA-$DEV-Turn90-3-Lvl1-v$VER.stl.bz2
 
+update 4x4Turn90_auto_1.stl $SUBDIR/U-$DEV-Turn90-4-Lvl1-v$VER.stl.bz2
 update 4x4Turn90_auto_1Y1.stl $SUBDIR/Y-$DEV-Turn90-4Part1-Lvl1-v$VER.stl.bz2
 update 4x4Turn90_auto_1Y2.stl $SUBDIR/Y-$DEV-Turn90-4Part2-Lvl1-v$VER.stl.bz2
-
 update 4x4Turn90_auto_1OA1.stl $SUBDIR/OA-$DEV-Turn90-4Part1-Lvl1-v$VER.stl.bz2
 update 4x4Turn90_auto_1OA2.stl $SUBDIR/OA-$DEV-Turn90-4Part2-Lvl1-v$VER.stl.bz2
-
 update 4x4Turn90_auto_1V.stl $SUBDIR/V-$DEV-Turn90-4-Lvl1-v$VER.stl.bz2
 
+update 4x4Side1Part1_auto_1.stl $SUBDIR/U-$DEV-Side1-4-Lvl1-v$VER.stl.bz2
 update 4x2-4x4Side1Part1_auto_1.stl $SUBDIR/R-$DEV-Side1-4Part1-Lvl1-v$VER.stl.bz2
 update 4x2-4x4Side1Part2_auto_1.stl $SUBDIR/R-$DEV-Side1-4Part2-Lvl1-v$VER.stl.bz2
 
