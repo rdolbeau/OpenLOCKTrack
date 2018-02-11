@@ -68,4 +68,4 @@ To be interoperable, the 2" wide track should be at height 0.4 mm over the base 
 
 For the required OpenLOCK files: https://www.printablescenery.com/product/open-lock/ (I use "OpenLOCK Tessellation Templates 7.6").
 
-For the optional turret: https://www.thingiverse.com/thing:2034293/
+For the optional turret: https://www.thingiverse.com/thing:2034293/ ; the base is included at scale 2/3 so you'll need to print a turret & guns at the same scale.
