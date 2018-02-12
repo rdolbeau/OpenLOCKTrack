@@ -12,6 +12,7 @@ typedef struct {
 
 double my_semicircle(double x, void * params);
 double my_negsemicircle(double x, void * params);
+double my_semiellipsis(double x, void * params);
 double my_negsemiellipsis(double x, void * params);
 double my_yline(double x, void * params);
 double my_wavyline(double x, void *params);

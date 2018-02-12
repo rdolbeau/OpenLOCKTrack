@@ -11,8 +11,10 @@ gen_scad: gen_scad.c
 	$(CC) $(CFLAGS) $< -o $@
 
 # STL from auto-generated scad, Level 0 
-STLS=	3x3Crossing_auto_0.stl \
+STLS=	3x1Straight_auto_0.stl \
+	3x3Crossing_auto_0.stl \
 	3x3Straight_auto_0.stl \
+	3x3ChokePoint_auto_0.stl \
 	3x3Turn90_auto_0.stl \
 	4x4Turn90_auto_0.stl \
 	4x4Turn90_auto_0Y1.stl 4x4Turn90_auto_0Y2.stl \
@@ -34,8 +36,10 @@ STLS=	3x3Crossing_auto_0.stl \
 	3x3SmoothRamp_auto_0.stl \
 	3x3StraightIntoBankingRight_auto_0.stl 3x3StraightIntoBankingLeft_auto_0.stl
 
-STL1S=	3x3Crossing_auto_1.stl \
+STL1S=	3x1Straight_auto_1.stl \
+	3x3Crossing_auto_1.stl \
 	3x3Straight_auto_1.stl \
+	3x3ChokePoint_auto_1.stl \
 	3x3Turn90_auto_1.stl \
 	4x4Turn90_auto_1.stl \
 	4x4Turn90_auto_1Y1.stl 4x4Turn90_auto_1Y2.stl \
@@ -241,31 +245,34 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 	$(CC) $(CFLAGS) -fopenmp -DPNG_SYNTH -lpng -lgsl -lgslcblas -lm $^ -o $@
 
 3x3Straight.png: PNGSynth
-	./PNGSynth $@ -f straight -t 2 -l 3 -w 3
+	./PNGSynth $@ -t 2 -f straight -l 3 -w 3
 
 3x3Crossing.png: PNGSynth
-	./PNGSynth $@ -f straight -T -f straight -T -t 2 -l 3 -w 3
+	./PNGSynth $@ -t 2 -f straight -T -f straight -T -l 3 -w 3
+
+3x3ChokePoint.png: PNGSynth
+	./PNGSynth $@ -t 0.5 -f side -M -f side -w 3 -l 3 -t 1 -f middlestraight # ends up at trackwidth == 2.
 
 3x3Turn90.png: PNGSynth
-	./PNGSynth $@ -f turn90 -t 2 -l 3 -w 3
+	./PNGSynth $@ -t 2 -f turn90 -l 3 -w 3
 
 4x4Turn90.png: PNGSynth
-	./PNGSynth $@ -f turn90 -t 2 -l 4 -w 4
+	./PNGSynth $@ -t 2 -f turn90 -l 4 -w 4
 
 6x4Turn90.png: PNGSynth
-	./PNGSynth $@ -f turn90 -t 2 -l 6 -w 4
+	./PNGSynth $@ -t 2 -f turn90 -l 6 -w 4
 
 6x4Turn90L.png: PNGSynth
-	./PNGSynth $@ -M -f turn90 -t 2 -l 6 -w 4
+	./PNGSynth $@ -t 2 -M -f turn90 -l 6 -w 4
 
 4x4Side1.png: PNGSynth
-	./PNGSynth $@ -f side -t 2 -l 4 -w 4
+	./PNGSynth $@ -t 2 -f side -l 4 -w 4
 
 6x6Turn90.png: PNGSynth
-	./PNGSynth $@ -f turn90 -t 2 -l 6 -w 6
+	./PNGSynth $@ -t 2 -f turn90 -l 6 -w 6
 
 4x4Yinter90.png: PNGSynth
-	./PNGSynth $@ -f turn90 -f straight -t 2 -l 4 -w 4
+	./PNGSynth $@ -t 2 -f turn90 -f straight -l 4 -w 4
 
 ##### Wider track
 4x4StraightWidth2to3.png: PNGSynth

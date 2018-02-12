@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 SUBDIR=export
 BZIP2="bzip2 -c"
@@ -11,14 +11,19 @@ mkdir -p $SUBDIR
 
 update() {
     if test \( \! -e $2  \) -o \( $1 -nt $2 \) ; then
+	echo "Compressing $1 to $2"
 	${BZIP2} $1 >| $2
     fi
 }
 
 # Lvl 0 
+update 3x1Straight_auto_0.stl $SUBDIR/SA-$DEV-Straight-Lvl0-v$VER.stl.bz2
+
 update 3x3Crossing_auto_0.stl $SUBDIR/EA-$DEV-Crossing-Lvl0-v$VER.stl.bz2
 
 update 3x3Straight_auto_0.stl $SUBDIR/EA-$DEV-Straight-Lvl0-v$VER.stl.bz2
+
+update 3x3ChokePoint_auto_0.stl $SUBDIR/EA-$DEV-ChokePoint-Lvl0-v$VER.stl.bz2
 
 update 3x3Turn90_auto_0.stl $SUBDIR/EA-$DEV-Turn90-3-Lvl0-v$VER.stl.bz2
 
@@ -64,9 +69,13 @@ update 2x4-6x4Turn90LPart2_auto_0.stl $SUBDIR/R-$DEV-Turn90L-6x4Part2-Lvl0-v$VER
 update 2x4-6x4Turn90LPart3_auto_0.stl $SUBDIR/R-$DEV-Turn90L-6x4Part3-Lvl0-v$VER.stl.bz2
 
 # Lvl 1
+update 3x1Straight_auto_1.stl $SUBDIR/SA-$DEV-Straight-Lvl1-v$VER.stl.bz2
+
 update 3x3Crossing_auto_1.stl $SUBDIR/EA-$DEV-Crossing-Lvl1-v$VER.stl.bz2
 
 update 3x3Straight_auto_1.stl $SUBDIR/EA-$DEV-Straight-Lvl1-v$VER.stl.bz2
+
+update 3x3ChokePoint_auto_1.stl $SUBDIR/EA-$DEV-ChokePoint-Lvl1-v$VER.stl.bz2
 
 update 3x3Turn90_auto_1.stl $SUBDIR/EA-$DEV-Turn90-3-Lvl1-v$VER.stl.bz2
 

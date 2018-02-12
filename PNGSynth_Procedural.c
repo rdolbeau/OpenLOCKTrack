@@ -26,17 +26,38 @@
 
 typedef struct {
 	const char *name;
-	void (*init)(fun_type*, int, int, double);
+	void (*init)(fun_type*, double, double, double);
 } track_fun;
 
-void init_myyline(fun_type* fun, int width, int length, double tw) {
+void init_topstraight(fun_type* fun, double width, double length, double tw) {
         fun->min = 0.;
         fun->max = length;
         fun->fun = &my_yline;
         fun->params[0] = tw/2.+0.5;
 }
 
-void init_mynegsemiellipsis(fun_type* fun, int width, int length, double tw) {
+void init_topstraighthalf(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = length/2.;
+        fun->fun = &my_yline;
+        fun->params[0] = tw/2.+0.5;
+}
+
+void init_middlepoint(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = 0.01;
+        fun->fun = &my_yline;
+        fun->params[0] = width/2.;
+}
+
+void init_middlestraight(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = length;
+        fun->fun = &my_yline;
+        fun->params[0] = width/2.;
+}
+
+void init_quarterellipsis(fun_type* fun, double width, double length, double tw) {
         fun->min = 0.;
         fun->max = length;
         fun->fun = &my_negsemiellipsis;
@@ -46,7 +67,26 @@ void init_mynegsemiellipsis(fun_type* fun, int width, int length, double tw) {
         fun->params[3] = width;
 }
 
-void init_mywavyline(fun_type* fun, int width, int length, double tw) {
+void init_topsemiellipsis(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = length;
+        fun->fun = &my_negsemiellipsis;
+        fun->params[0] = length/2.-(tw/2.+0.5); // !
+        fun->params[1] = width/2.-(tw/2.+0.5);
+        fun->params[2] = length/2;
+        fun->params[3] = width/2;
+}
+void init_bottomsemiellipsis(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = length;
+        fun->fun = &my_semiellipsis;
+        fun->params[0] = length/2.-(tw/2.+0.5); // !
+        fun->params[1] = width/2.-(tw/2.+0.5);
+        fun->params[2] = length/2;
+        fun->params[3] = width/2;
+}
+
+void init_fullside(fun_type* fun, double width, double length, double tw) {
         fun->min = 0.;
         fun->max = length;
         fun->fun = &my_wavyline;
@@ -56,10 +96,26 @@ void init_mywavyline(fun_type* fun, int width, int length, double tw) {
 	fun->params[3] = 0.5 + tw/2.;
 }
 
+void init_middleside(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = length;
+        fun->fun = &my_wavyline;
+        fun->params[0] = 0;
+        fun->params[1] = length;
+        fun->params[2] = width/2.;
+        fun->params[3] = 0.5 + tw/2.;
+}
+
 track_fun all_track_fun[] = {
-	{ "straight", &init_myyline },
-	{ "turn90", &init_mynegsemiellipsis },
-	{ "side", &init_mywavyline },
+	{ "straight", &init_topstraight }, /* straight line, 1/2" off the top */
+	{ "turn90", &init_quarterellipsis }, /* 90 deg turn, 1/2" off the top and side */
+	{ "side", &init_fullside }, /* move from 1/2" off the top to 1/2" off the bottom */
+	{ "tophalfellipsis", &init_topsemiellipsis }, /* centered half-circle in the top half */
+	{ "bottomhalfellipsis", &init_bottomsemiellipsis }, /* centered half-circle in the bottom half */
+	{ "middlestraight", &init_middlestraight }, /* straight line, in the middle */
+	{ "middleside", &init_middleside }, /* move from the middle to 1/2" off the bottom */
+	{ "straighthalf", &init_topstraighthalf }, /* straight line, 1/2" off the top, stops in the middle; beware the rounded end */
+	{ "middlepoint", &init_middlepoint }, /* just the rounded bit */
 	{ NULL, NULL}
 };
 
@@ -80,37 +136,41 @@ void synth(pngstruct *png, int argc, char **argv) {
 	char c;
 	extern int optind, optopt;
 	int dpi = 120; // dot per inch
-	int width = 3; // inches
-	int length = 3; // inches
+	double width = 3; // inches
+	double length = 3; // inches
 	int dogrid = 1;
 	double trackwidth = 2.;
 	const char * fname;
 	int transpose = 0;
 	int mirror = 0;
+	int flip = 0;
 	int x,y;
 	int lf[10];
 	int tr[10];
 	int mi[10];
+	int fl[10];
+	double tw[10];
 	int lfs = 0;
 	int nf;
+	const char* texname = "InchGrass.png";
 
-	while ((c = getopt (argc, argv, "d:w:l:gt:f:TM")) != -1) {
+	while ((c = getopt (argc, argv, "d:w:l:gt:f:TMFz:")) != -1) {
 		switch (c)
 		{
 		case 'd':
 			dpi = atoi(optarg);
 			break;
 		case 'w':
-			width = atoi(optarg);
+			width = atof(optarg);
 			break;
 		case 'l':
-			length = atoi(optarg);
+			length = atof(optarg);
 			break;
 		case 'g':
 			dogrid = !dogrid;
 			break;
 		case 't':
-			trackwidth = atof(optarg);
+			trackwidth = atof(optarg); /* width of the track, in each, sticky per-function */
 			break;
 		case 'f':
 			fname = optarg;
@@ -120,21 +180,29 @@ void synth(pngstruct *png, int argc, char **argv) {
 			lf[lfs] = nf;
 			tr[lfs] = transpose;
 			mi[lfs] = mirror;
+			fl[lfs] = flip;
+			tw[lfs] = trackwidth;
 			lfs++;
 			break;
 		case 'T':
-			transpose = !transpose;
+			transpose = !transpose; /* transpose, sticky per-function */
 			break;
 		case 'M':
-			mirror = !mirror;
+			mirror = !mirror; /* mirror, sticky per-function */
+			break;
+		case 'F':
+			flip = !flip; /* vertical mirror, sticky per-function */
+			break;
+		case 'z':
+			texname = strdup(optarg);
 			break;
 		default:
 			abort_("Unknown option to Synth");
 		}
 	}
 
-	png->height = dpi * width;
-	png->width = dpi * length; // don't ask
+	png->height = floor(dpi * width);
+	png->width = floor(dpi * length); // don't ask
 	png->bit_depth = 8;
 	png->color_type = 0; // ???
 	png->number_of_passes = 0; // ???
@@ -153,68 +221,65 @@ void synth(pngstruct *png, int argc, char **argv) {
                 }
         }
 	// texture
-	tiletexture(png, "InchGrass.png", 0, 0, png->width, png->height, 0.1);
+	tiletexture(png, texname, 0, 0, png->width, png->height, 0.1);
 	// track
 	fun_type fun[10];
 	
 	for (nf = 0 ; nf < lfs ; nf++) {
-		all_track_fun[lf[nf]].init(&fun[nf], width, length, trackwidth);
+		all_track_fun[lf[nf]].init(&fun[nf], width, length, tw[nf]);
 	}
 
-	int byinches[length][width];
-	memset(byinches, 0, sizeof(int)*width*length);
 	for (y=0; y<png->height; y++) {
                 png_byte* row = png->row_pointers[y];
 #pragma omp parallel for default(shared) private(x)
 		for (x=0; x<png->width; x++) {
 			png_byte* ptr = &(row[x*4]);
-			double m = 100000.;
 			int lnf;
+			int intrack = 0;
+			int inborder = 0;
+			double maxborder = -1000.;
 			for (lnf = 0 ; lnf < lfs ; lnf++) {
 				fun_type lfun;
 				memcpy(&lfun, &fun[lnf], sizeof(fun_type));
 				int lx = x;
+				int ly = y;
 				if (mi[lnf])
 					lx = png->width-x;
+				if (fl[lnf])
+					ly = png->height-y;
 				if (!tr[lnf]) {
 					lfun.x = (double)lx/(double)dpi;
-					lfun.y = (double)y/(double)dpi;
+					lfun.y = (double)ly/(double)dpi;
 				} else {
 					lfun.y = (double)lx/(double)dpi;
-					lfun.x = (double)y/(double)dpi;
+					lfun.x = (double)ly/(double)dpi;
 				}
-				double m2 = min_dist(&lfun);
-				if (!isnan(m2))
-					m = fmin(m, m2);
+				double m = min_dist(&lfun);
+				if (!isnan(m)) {
+					if (m <= (tw[lnf]/2.)) {
+						intrack = 1;
+					} else if (m <= (tw[lnf]/2.+0.1)) {
+						inborder = 1;
+						maxborder = fmax(maxborder, 10. * ((tw[lnf]/2.+0.1)-m));
+					}
+				}
 			}
-			if (!isnan(m)) {
-				if (m <= (trackwidth/2.)) {
-					// track surface
-					ptr[0] = 10;
-					ptr[1] = 10;
-					ptr[2] = 10;
-					byinches[x/dpi][y/dpi] = 1;
-				} else if (m <= (trackwidth/2.+0.1)) {
-					// hard border
-					double offset = sin(10. * ((trackwidth/2.+0.1)-m) * M_PI);
-					double height = 20.;
-					ptr[0] = floor(10. + height * offset);
-					ptr[1] = floor(10. + height * offset);
-					ptr[2] = floor(10. + height * offset);
-				} 
-			}
+			if (intrack) {
+				// track surface
+				ptr[0] = 10;
+				ptr[1] = 10;
+				ptr[2] = 10;
+			} else if (inborder) {
+				// hard border
+				double offset = sin(maxborder * M_PI);
+				double height = 20.;
+				ptr[0] = floor(10. + height * offset);
+				ptr[1] = floor(10. + height * offset);
+				ptr[2] = floor(10. + height * offset);
+			} 
 		}
 	}
 	// grid
 	if (dogrid)
 		grid(png, dpi);
-
-#if 0
-	for (x = 0 ; x < width ; x++) {
-		for (y = 0 ; y < length ; y++) {
-			printf("\t%d", byinches[x][y]);
-		}
-		printf("\n");
-	}
-#endif
 }

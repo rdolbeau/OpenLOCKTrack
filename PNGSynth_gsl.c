@@ -30,6 +30,21 @@ double my_negsemicircle(double x, void * params) {
         return v;
 }
 
+double my_semiellipsis(double x, void * params) {
+        fun_type *fun = (fun_type*)params;
+        double r1 = fun->params[0];
+        double r2 = fun->params[1];
+        double cx = fun->params[2];
+        double cy = fun->params[3];
+
+        double v = (r2/r1)*sqrt((r1*r1)-((x-cx)*(x-cx)))+cy;
+
+        if isnan(v)
+                v = -100.;
+
+        return v;
+}
+
 double my_negsemiellipsis(double x, void * params) {
         fun_type *fun = (fun_type*)params;
         double r1 = fun->params[0];
@@ -48,6 +63,10 @@ double my_negsemiellipsis(double x, void * params) {
 double my_yline(double x, void * params) {
 	fun_type *fun = (fun_type*)params;
 	double p = fun->params[0];
+	if (x < fun->min)
+		return -100.;
+	if (x > fun->max)
+		return -100.;
 	return p;
 }
 
