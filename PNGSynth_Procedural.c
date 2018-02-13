@@ -36,6 +36,14 @@ void init_topstraight(fun_type* fun, double width, double length, double tw) {
         fun->params[0] = tw/2.+0.5;
 }
 
+void init_topstraight15(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = length;
+        fun->fun = &my_yline;
+        fun->params[0] = tw/2.+1.5;
+}
+
+
 void init_topstraighthalf(fun_type* fun, double width, double length, double tw) {
         fun->min = 0.;
         fun->max = length/2.;
@@ -116,6 +124,7 @@ track_fun all_track_fun[] = {
 	{ "middleside", &init_middleside }, /* move from the middle to 1/2" off the bottom */
 	{ "straighthalf", &init_topstraighthalf }, /* straight line, 1/2" off the top, stops in the middle; beware the rounded end */
 	{ "middlepoint", &init_middlepoint }, /* just the rounded bit */
+	{ "straight15", &init_topstraight15 }, /* straight line, 1+1/2" off the top */
 	{ NULL, NULL}
 };
 

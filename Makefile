@@ -25,6 +25,8 @@ STLS=	3x1Straight_auto_0.stl \
 	2x4-6x4Turn90LPart1_auto_0.stl 2x4-6x4Turn90LPart2_auto_0.stl 2x4-6x4Turn90LPart3_auto_0.stl \
 	4x4Side1_auto_0.stl \
 	4x2-4x4Side1Part1_auto_0.stl 4x2-4x4Side1Part2_auto_0.stl \
+	4x4Side1L_auto_0.stl \
+	4x2-4x4Side1LPart1_auto_0.stl 4x2-4x4Side1LPart2_auto_0.stl \
 	2x2-6x6Turn90Part1_auto_0.stl 2x2-6x6Turn90Part2_auto_0.stl 3x3-6x6Turn90Part3_auto_0.stl 3x3-6x6Turn90Part4_auto_0.stl \
 	4x4Turn90BankedBE_auto_0.stl \
 	4x4Turn90BankedB_auto_0.stl \
@@ -50,6 +52,8 @@ STL1S=	3x1Straight_auto_1.stl \
 	2x4-6x4Turn90LPart1_auto_1.stl 2x4-6x4Turn90LPart2_auto_1.stl 2x4-6x4Turn90LPart3_auto_1.stl \
 	4x4Side1_auto_1.stl \
 	4x2-4x4Side1Part1_auto_1.stl 4x2-4x4Side1Part2_auto_1.stl \
+	4x4Side1L_auto_1.stl \
+	4x2-4x4Side1LPart1_auto_1.stl 4x2-4x4Side1LPart2_auto_1.stl \
 	2x2-6x6Turn90Part1_auto_1.stl 2x2-6x6Turn90Part2_auto_1.stl 3x3-6x6Turn90Part3_auto_1.stl 3x3-6x6Turn90Part4_auto_1.stl \
 	4x4Turn90BankedBE_auto_1.stl \
 	4x4Turn90BankedB_auto_1.stl \
@@ -113,6 +117,10 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 	convert $< -crop 480x240+0+0 $@
 4x2-4x4Side1Part2.png: 4x4Side1.png
 	convert $< -crop 480x240+0+240 $@
+4x2-4x4Side1LPart1.png: 4x4Side1L.png
+	convert $< -crop 480x240+0+0 $@
+4x2-4x4Side1LPart2.png: 4x4Side1L.png
+	convert $< -crop 480x240+0+240 $@
 
 
 # cut an U piece into 2 Y pieces - beware loss of surface !
@@ -137,13 +145,6 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 
 4x4Turn90_auto_1V.scad: 4x4Turn90.png gen_scad
 	./gen_scad -d $(DPI) -T V -L 1 $<
-
-1x3Straight.png: 3x3Straight.png
-	convert $< -crop 120x360+0+0 $@
-
-3x1Straight.png: 3x3Straight.png
-	convert $< -crop 120x360+0+0 -rotate 90 $@
-
 
 # variable-height ramps on SA pieces (STL)
 3x1Ramp0_1.stl: 3x1Ramp0_1.scad 3x1Straight.png
@@ -244,6 +245,12 @@ PNGFilter_3x3StraightIntoBanking: PNGFilter_main.c PNGFilter_3x3StraightIntoBank
 PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support.c
 	$(CC) $(CFLAGS) -fopenmp -DPNG_SYNTH -lpng -lgsl -lgslcblas -lm $^ -o $@
 
+1x3Straight.png: PNGSynth
+	./PNGSynth $@ -t 2 -f straight -l 1 -w 3
+
+3x1Straight.png: PNGSynth
+	./PNGSynth $@ -t 2 -T -f straight -l 3 -w 1
+
 3x3Straight.png: PNGSynth
 	./PNGSynth $@ -t 2 -f straight -l 3 -w 3
 
@@ -268,24 +275,30 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 4x4Side1.png: PNGSynth
 	./PNGSynth $@ -t 2 -f side -l 4 -w 4
 
+4x4Side1L.png: PNGSynth
+	./PNGSynth $@ -t 2 -F -f side -l 4 -w 4
+
 6x6Turn90.png: PNGSynth
 	./PNGSynth $@ -t 2 -f turn90 -l 6 -w 6
 
-4x4Yinter90.png: PNGSynth
+4x4Yinter90.png: PNGSynth #TODO: flipped version
 	./PNGSynth $@ -t 2 -f turn90 -f straight -l 4 -w 4
 
 ##### Wider track
 4x4StraightWidth2to3.png: PNGSynth
-	./PNGSynth $@ -f side -f straight -t 2 -l 4 -w 4
+	./PNGSynth $@ -t 2 -f side -f straight -l 4 -w 4
+
+2x4StraightWidth2to3.png: PNGSynth
+	./PNGSynth $@ -t 1 -F -f middleside -F -t 2 -f straight -l 2 -w 4
 
 4x5StraightWidth3to4.png: PNGSynth
-	./PNGSynth $@ -f side -f straight -t 3 -l 4 -w 5
+	./PNGSynth $@ -t 3 -f side -f straight -l 4 -w 5
 
 2x4StraightWidth3.png: PNGSynth
-	./PNGSynth $@ -f straight -t 3 -l 2 -w 4
+	./PNGSynth $@ -t 3 -f straight -l 2 -w 4
 
 4x4Turn90Width3.png: PNGSynth
-	./PNGSynth $@ -f turn90 -t 3 -l 4 -w 4
+	./PNGSynth $@ -t 3 -f turn90 -l 4 -w 4
 
 4x4Turn90Width3Banked.png: 4x4Turn90Width3.png PNGFilter_4x4Turn90Banking
 	./PNGFilter_4x4Turn90Banking $< $@ -s 4 -t 3

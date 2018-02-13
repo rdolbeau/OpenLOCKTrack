@@ -16,110 +16,62 @@ update() {
     fi
 }
 
-# Lvl 0 
-update 3x1Straight_auto_0.stl $SUBDIR/SA-$DEV-Straight-Lvl0-v$VER.stl.bz2
+# Exists at both level:
+for L in 0 1; do
+    update 3x1Straight_auto_"$L".stl $SUBDIR/SA-$DEV-Straight-Lvl"$L"-v$VER.stl.bz2
 
-update 3x3Crossing_auto_0.stl $SUBDIR/EA-$DEV-Crossing-Lvl0-v$VER.stl.bz2
-
-update 3x3Straight_auto_0.stl $SUBDIR/EA-$DEV-Straight-Lvl0-v$VER.stl.bz2
-
-update 3x3ChokePoint_auto_0.stl $SUBDIR/EA-$DEV-ChokePoint-Lvl0-v$VER.stl.bz2
-
-update 3x3Turn90_auto_0.stl $SUBDIR/EA-$DEV-Turn90-3-Lvl0-v$VER.stl.bz2
-
-update 4x4Turn90_auto_0.stl $SUBDIR/U-$DEV-Turn90-4-Lvl0-v$VER.stl.bz2
-update 4x4Turn90_auto_0Y1.stl $SUBDIR/Y-$DEV-Turn90-4Part1-Lvl0-v$VER.stl.bz2
-update 4x4Turn90_auto_0Y2.stl $SUBDIR/Y-$DEV-Turn90-4Part2-Lvl0-v$VER.stl.bz2
-update 4x4Turn90_auto_0OA1.stl $SUBDIR/OA-$DEV-Turn90-4Part1-Lvl0-v$VER.stl.bz2
-update 4x4Turn90_auto_0OA2.stl $SUBDIR/OA-$DEV-Turn90-4Part2-Lvl0-v$VER.stl.bz2
-update 4x4Turn90_auto_0V.stl $SUBDIR/V-$DEV-Turn90-4-Lvl0-v$VER.stl.bz2
-
-update 4x4Side1_auto_0.stl $SUBDIR/U-$DEV-Side1-4-Lvl0-v$VER.stl.bz2
-update 4x2-4x4Side1Part1_auto_0.stl $SUBDIR/R-$DEV-Side1-4Part1-Lvl0-v$VER.stl.bz2
-update 4x2-4x4Side1Part2_auto_0.stl $SUBDIR/R-$DEV-Side1-4Part2-Lvl0-v$VER.stl.bz2
-
-update 2x2-6x6Turn90Part1_auto_0.stl $SUBDIR/E-$DEV-Turn90-6Part1-Lvl0-v$VER.stl.bz2
-update 2x2-6x6Turn90Part2_auto_0.stl $SUBDIR/E-$DEV-Turn90-6Part2-Lvl0-v$VER.stl.bz2
-update 3x3-6x6Turn90Part3_auto_0.stl $SUBDIR/EA-$DEV-Turn90-6Part3-Lvl0-v$VER.stl.bz2
-update 3x3-6x6Turn90Part4_auto_0.stl $SUBDIR/EA-$DEV-Turn90-6Part4-Lvl0-v$VER.stl.bz2
-
-update 4x4Yinter90_auto_0.stl $SUBDIR/U-$DEV-Yinter90-Lvl0-v$VER.stl.bz2
-
-update 4x4Turn90Banked_auto_0.stl $SUBDIR/OA-$DEV-4Turn90Banked-Lvl0-v$VER.stl.bz2
-update 4x4Turn90BankedB_auto_0.stl $SUBDIR/OA-$DEV-4Turn90BankedB-Lvl0-v$VER.stl.bz2
-update 4x4Turn90BankedBE_auto_0.stl $SUBDIR/OA-$DEV-4Turn90BankedBE-Lvl0-v$VER.stl.bz2
-update 4x4Turn90BankedE_auto_0.stl $SUBDIR/OA-$DEV-4Turn90BankedE-Lvl0-v$VER.stl.bz2
-
-update 3x3Turn90Banked_auto_0.stl $SUBDIR/EA-$DEV-3Turn90Banked-Lvl0-v$VER.stl.bz2
-
-update 3x3StraightIntoBankingLeft_auto_0.stl $SUBDIR/EA-$DEV-StraightIntoBankingLeft-Lvl0-v$VER.stl.bz2
-update 3x3StraightIntoBankingRight_auto_0.stl $SUBDIR/EA-$DEV-StraightIntoBankingRight-Lvl0-v$VER.stl.bz2
-
-update 2x2-4x4Turn90Part1_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part1-Lvl0-v$VER.stl.bz2
-update 2x2-4x4Turn90Part1_turret0x0_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part1-Turret-Lvl0-v$VER.stl.bz2
-update 2x2-4x4Turn90Part2_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part2-Lvl0-v$VER.stl.bz2
-update 2x2-4x4Turn90Part3_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part3-Lvl0-v$VER.stl.bz2
-update 2x2-4x4Turn90Part4_auto_0.stl $SUBDIR/E-$DEV-Turn90-4Part4-Lvl0-v$VER.stl.bz2
-
-update 2x4-6x4Turn90Part1_auto_0.stl $SUBDIR/R-$DEV-Turn90-6x4Part1-Lvl0-v$VER.stl.bz2
-update 2x4-6x4Turn90Part2_auto_0.stl $SUBDIR/R-$DEV-Turn90-6x4Part2-Lvl0-v$VER.stl.bz2
-update 2x4-6x4Turn90Part3_auto_0.stl $SUBDIR/R-$DEV-Turn90-6x4Part3-Lvl0-v$VER.stl.bz2
-update 2x4-6x4Turn90LPart1_auto_0.stl $SUBDIR/R-$DEV-Turn90L-6x4Part1-Lvl0-v$VER.stl.bz2
-update 2x4-6x4Turn90LPart2_auto_0.stl $SUBDIR/R-$DEV-Turn90L-6x4Part2-Lvl0-v$VER.stl.bz2
-update 2x4-6x4Turn90LPart3_auto_0.stl $SUBDIR/R-$DEV-Turn90L-6x4Part3-Lvl0-v$VER.stl.bz2
-
-# Lvl 1
-update 3x1Straight_auto_1.stl $SUBDIR/SA-$DEV-Straight-Lvl1-v$VER.stl.bz2
-
-update 3x3Crossing_auto_1.stl $SUBDIR/EA-$DEV-Crossing-Lvl1-v$VER.stl.bz2
-
-update 3x3Straight_auto_1.stl $SUBDIR/EA-$DEV-Straight-Lvl1-v$VER.stl.bz2
-
-update 3x3ChokePoint_auto_1.stl $SUBDIR/EA-$DEV-ChokePoint-Lvl1-v$VER.stl.bz2
-
-update 3x3Turn90_auto_1.stl $SUBDIR/EA-$DEV-Turn90-3-Lvl1-v$VER.stl.bz2
-
-update 4x4Turn90_auto_1.stl $SUBDIR/U-$DEV-Turn90-4-Lvl1-v$VER.stl.bz2
-update 4x4Turn90_auto_1Y1.stl $SUBDIR/Y-$DEV-Turn90-4Part1-Lvl1-v$VER.stl.bz2
-update 4x4Turn90_auto_1Y2.stl $SUBDIR/Y-$DEV-Turn90-4Part2-Lvl1-v$VER.stl.bz2
-update 4x4Turn90_auto_1OA1.stl $SUBDIR/OA-$DEV-Turn90-4Part1-Lvl1-v$VER.stl.bz2
-update 4x4Turn90_auto_1OA2.stl $SUBDIR/OA-$DEV-Turn90-4Part2-Lvl1-v$VER.stl.bz2
-update 4x4Turn90_auto_1V.stl $SUBDIR/V-$DEV-Turn90-4-Lvl1-v$VER.stl.bz2
-
-update 4x4Side1_auto_1.stl $SUBDIR/U-$DEV-Side1-4-Lvl1-v$VER.stl.bz2
-update 4x2-4x4Side1Part1_auto_1.stl $SUBDIR/R-$DEV-Side1-4Part1-Lvl1-v$VER.stl.bz2
-update 4x2-4x4Side1Part2_auto_1.stl $SUBDIR/R-$DEV-Side1-4Part2-Lvl1-v$VER.stl.bz2
-
-update 2x2-6x6Turn90Part1_auto_1.stl $SUBDIR/E-$DEV-Turn90-6Part1-Lvl1-v$VER.stl.bz2
-update 2x2-6x6Turn90Part2_auto_1.stl $SUBDIR/E-$DEV-Turn90-6Part2-Lvl1-v$VER.stl.bz2
-update 3x3-6x6Turn90Part3_auto_1.stl $SUBDIR/EA-$DEV-Turn90-6Part3-Lvl1-v$VER.stl.bz2
-update 3x3-6x6Turn90Part4_auto_1.stl $SUBDIR/EA-$DEV-Turn90-6Part4-Lvl1-v$VER.stl.bz2
-
-update 4x4Yinter90_auto_1.stl $SUBDIR/U-$DEV-Yinter90-Lvl1-v$VER.stl.bz2
-
-update 4x4Turn90Banked_auto_1.stl $SUBDIR/OA-$DEV-4Turn90Banked-Lvl1-v$VER.stl.bz2
-update 4x4Turn90BankedB_auto_1.stl $SUBDIR/OA-$DEV-4Turn90BankedB-Lvl1-v$VER.stl.bz2
-update 4x4Turn90BankedBE_auto_1.stl $SUBDIR/OA-$DEV-4Turn90BankedBE-Lvl1-v$VER.stl.bz2
-update 4x4Turn90BankedE_auto_1.stl $SUBDIR/OA-$DEV-4Turn90BankedE-Lvl1-v$VER.stl.bz2
-
-update 3x3Turn90Banked_auto_1.stl $SUBDIR/EA-$DEV-3Turn90Banked-Lvl1-v$VER.stl.bz2
-
-update 3x3StraightIntoBankingLeft_auto_1.stl $SUBDIR/EA-$DEV-StraightIntoBankingLeft-Lvl1-v$VER.stl.bz2
-update 3x3StraightIntoBankingRight_auto_1.stl $SUBDIR/EA-$DEV-StraightIntoBankingRight-Lvl1-v$VER.stl.bz2
-
-update 2x2-4x4Turn90Part1_auto_1.stl $SUBDIR/E-$DEV-Turn90-4Part1-Lvl1-v$VER.stl.bz2
-update 2x2-4x4Turn90Part1_turret0x0_auto_1.stl $SUBDIR/E-$DEV-Turn90-4Part1-Turret-Lvl1-v$VER.stl.bz2
-update 2x2-4x4Turn90Part2_auto_1.stl $SUBDIR/E-$DEV-Turn90-4Part2-Lvl1-v$VER.stl.bz2
-update 2x2-4x4Turn90Part3_auto_1.stl $SUBDIR/E-$DEV-Turn90-4Part3-Lvl1-v$VER.stl.bz2
-update 2x2-4x4Turn90Part4_auto_1.stl $SUBDIR/E-$DEV-Turn90-4Part4-Lvl1-v$VER.stl.bz2
-
-update 2x4-6x4Turn90Part1_auto_1.stl $SUBDIR/R-$DEV-Turn90-6x4Part1-Lvl1-v$VER.stl.bz2
-update 2x4-6x4Turn90Part2_auto_1.stl $SUBDIR/R-$DEV-Turn90-6x4Part2-Lvl1-v$VER.stl.bz2
-update 2x4-6x4Turn90Part3_auto_1.stl $SUBDIR/R-$DEV-Turn90-6x4Part3-Lvl1-v$VER.stl.bz2
-update 2x4-6x4Turn90LPart1_auto_1.stl $SUBDIR/R-$DEV-Turn90L-6x4Part1-Lvl1-v$VER.stl.bz2
-update 2x4-6x4Turn90LPart2_auto_1.stl $SUBDIR/R-$DEV-Turn90L-6x4Part2-Lvl1-v$VER.stl.bz2
-update 2x4-6x4Turn90LPart3_auto_1.stl $SUBDIR/R-$DEV-Turn90L-6x4Part3-Lvl1-v$VER.stl.bz2
-
+    update 3x3Crossing_auto_"$L".stl $SUBDIR/EA-$DEV-Crossing-Lvl"$L"-v$VER.stl.bz2
+    
+    update 3x3Straight_auto_"$L".stl $SUBDIR/EA-$DEV-Straight-Lvl"$L"-v$VER.stl.bz2
+    
+    update 3x3ChokePoint_auto_"$L".stl $SUBDIR/EA-$DEV-ChokePoint-Lvl"$L"-v$VER.stl.bz2
+    
+    update 3x3Turn90_auto_"$L".stl $SUBDIR/EA-$DEV-Turn90-3-Lvl"$L"-v$VER.stl.bz2
+    
+    update 4x4Turn90_auto_"$L".stl $SUBDIR/U-$DEV-Turn90-4-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90_auto_"$L"Y1.stl $SUBDIR/Y-$DEV-Turn90-4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90_auto_"$L"Y2.stl $SUBDIR/Y-$DEV-Turn90-4Part2-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90_auto_"$L"OA1.stl $SUBDIR/OA-$DEV-Turn90-4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90_auto_"$L"OA2.stl $SUBDIR/OA-$DEV-Turn90-4Part2-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90_auto_"$L"V.stl $SUBDIR/V-$DEV-Turn90-4-Lvl"$L"-v$VER.stl.bz2
+    
+    update 4x4Side1_auto_"$L".stl $SUBDIR/U-$DEV-Side1-4-Lvl"$L"-v$VER.stl.bz2
+    update 4x2-4x4Side1Part1_auto_"$L".stl $SUBDIR/R-$DEV-Side1-4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 4x2-4x4Side1Part2_auto_"$L".stl $SUBDIR/R-$DEV-Side1-4Part2-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Side1L_auto_"$L".stl $SUBDIR/U-$DEV-Side1L-4-Lvl"$L"-v$VER.stl.bz2
+    update 4x2-4x4Side1LPart1_auto_"$L".stl $SUBDIR/R-$DEV-Side1L-4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 4x2-4x4Side1LPart2_auto_"$L".stl $SUBDIR/R-$DEV-Side1L-4Part2-Lvl"$L"-v$VER.stl.bz2
+    
+    update 2x2-6x6Turn90Part1_auto_"$L".stl $SUBDIR/E-$DEV-Turn90-6Part1-Lvl"$L"-v$VER.stl.bz2
+    update 2x2-6x6Turn90Part2_auto_"$L".stl $SUBDIR/E-$DEV-Turn90-6Part2-Lvl"$L"-v$VER.stl.bz2
+    update 3x3-6x6Turn90Part3_auto_"$L".stl $SUBDIR/EA-$DEV-Turn90-6Part3-Lvl"$L"-v$VER.stl.bz2
+    update 3x3-6x6Turn90Part4_auto_"$L".stl $SUBDIR/EA-$DEV-Turn90-6Part4-Lvl"$L"-v$VER.stl.bz2
+    
+    update 4x4Yinter90_auto_"$L".stl $SUBDIR/U-$DEV-Yinter90-Lvl"$L"-v$VER.stl.bz2
+    
+    update 4x4Turn90Banked_auto_"$L".stl $SUBDIR/OA-$DEV-4Turn90Banked-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90BankedB_auto_"$L".stl $SUBDIR/OA-$DEV-4Turn90BankedB-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90BankedBE_auto_"$L".stl $SUBDIR/OA-$DEV-4Turn90BankedBE-Lvl"$L"-v$VER.stl.bz2
+    update 4x4Turn90BankedE_auto_"$L".stl $SUBDIR/OA-$DEV-4Turn90BankedE-Lvl"$L"-v$VER.stl.bz2
+    
+    update 3x3Turn90Banked_auto_"$L".stl $SUBDIR/EA-$DEV-3Turn90Banked-Lvl"$L"-v$VER.stl.bz2
+    
+    update 3x3StraightIntoBankingLeft_auto_"$L".stl $SUBDIR/EA-$DEV-StraightIntoBankingLeft-Lvl"$L"-v$VER.stl.bz2
+    update 3x3StraightIntoBankingRight_auto_"$L".stl $SUBDIR/EA-$DEV-StraightIntoBankingRight-Lvl"$L"-v$VER.stl.bz2
+    
+    update 2x2-4x4Turn90Part1_auto_"$L".stl $SUBDIR/E-$DEV-Turn90-4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 2x2-4x4Turn90Part1_turret0x0_auto_"$L".stl $SUBDIR/E-$DEV-Turn90-4Part1-Turret-Lvl"$L"-v$VER.stl.bz2
+    update 2x2-4x4Turn90Part2_auto_"$L".stl $SUBDIR/E-$DEV-Turn90-4Part2-Lvl"$L"-v$VER.stl.bz2
+    update 2x2-4x4Turn90Part3_auto_"$L".stl $SUBDIR/E-$DEV-Turn90-4Part3-Lvl"$L"-v$VER.stl.bz2
+    update 2x2-4x4Turn90Part4_auto_"$L".stl $SUBDIR/E-$DEV-Turn90-4Part4-Lvl"$L"-v$VER.stl.bz2
+    
+    update 2x4-6x4Turn90Part1_auto_"$L".stl $SUBDIR/R-$DEV-Turn90-6x4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 2x4-6x4Turn90Part2_auto_"$L".stl $SUBDIR/R-$DEV-Turn90-6x4Part2-Lvl"$L"-v$VER.stl.bz2
+    update 2x4-6x4Turn90Part3_auto_"$L".stl $SUBDIR/R-$DEV-Turn90-6x4Part3-Lvl"$L"-v$VER.stl.bz2
+    update 2x4-6x4Turn90LPart1_auto_"$L".stl $SUBDIR/R-$DEV-Turn90L-6x4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 2x4-6x4Turn90LPart2_auto_"$L".stl $SUBDIR/R-$DEV-Turn90L-6x4Part2-Lvl"$L"-v$VER.stl.bz2
+    update 2x4-6x4Turn90LPart3_auto_"$L".stl $SUBDIR/R-$DEV-Turn90L-6x4Part3-Lvl"$L"-v$VER.stl.bz2
+done
 
 # Ramps and the checkpoint and other not-by-layer stuff
 update 3x1CheckPoint.stl $SUBDIR/SA-$DEV-CheckPoint-Lvl0-v$VER.stl.bz2
@@ -129,5 +81,3 @@ update 3x1Ramp1_2.stl $SUBDIR/SA-$DEV-Ramp-Lvl1-Lvl2-v$VER.stl.bz2
 update 3x3StraightPotholes_auto_1.stl $SUBDIR/EA-$DEV-StraightPotholes-Lvl1-v$VER.stl.bz2
 update 4x4Yinter90Raised_auto_0.stl $SUBDIR/U-$DEV-Yinter90Raised-Lvl0-Lvl1-v$VER.stl.bz2
 update 3x3SmoothRamp_auto_0.stl $SUBDIR/EA-$DEV-SmoothRamp-Lvl0-Lvl1-v$VER.stl.bz2
-
-
