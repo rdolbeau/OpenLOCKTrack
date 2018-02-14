@@ -21,7 +21,7 @@
 
 #include "PNGFilter_main.h"
 
-#define FNAME "PNGFilter_3x3Potholes"
+#define FNAME "PNGFilter_NxNPotholes"
 
 void filter(pngstruct *png, int argc, char **argv) {
  	char c;
@@ -29,9 +29,10 @@ void filter(pngstruct *png, int argc, char **argv) {
 	int x, y, z;
 	int *lx = (int*)malloc(sizeof(int));
 	int *ly = (int*)malloc(sizeof(int));
-	int np = 0;	
+	int np = 0;
+	int size = 3;
 
-	while ((c = getopt (argc, argv, "p:")) != -1) {
+	while ((c = getopt (argc, argv, "p:s:")) != -1) {
 		switch (c)
 		{
 		case 'p':
@@ -52,6 +53,12 @@ void filter(pngstruct *png, int argc, char **argv) {
 				ly = (int*)realloc(ly, sizeof(int)*np);
 			}	
 			break;
+		case 's':
+			size = atoi(optarg);
+			if (size < 3 || size > 6) {
+				abort_("Wrong size specified");
+			}
+			break;
 		default:
 			abort_("Unknown option to filter %", FNAME);
 		}
@@ -65,12 +72,12 @@ void filter(pngstruct *png, int argc, char **argv) {
         /* Reduce any 16-bits-per-sample images to 8-bits-per-sample */
         png_set_strip_16(png->png_ptr);
 
-	int dpi = png->height/3; // should be a 3x3 tile
+	int dpi = png->height/size;
 
         for (y=0; y<png->height; y++) {
                 png_byte* row = png->row_pointers[y];
                 for (x=0; x<png->width; x++) {
-			int dpi2 = png->width/3; // should be a 3x3 tile
+			int dpi2 = png->width/size;
 			if (dpi != dpi2) {
 				abort_("%s: non-square PNG", FNAME);
 			}

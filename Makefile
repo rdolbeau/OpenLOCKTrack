@@ -182,11 +182,11 @@ PNGFilter_4x4Yinter90raisesplitto1: PNGFilter_main.c PNGFilter_4x4Yinter90raises
 	./PNGFilter_4x4Yinter90raisesplitto1 $< $@
 
 
-PNGFilter_3x3Potholes: PNGFilter_main.c PNGFilter_3x3Potholes.c
+PNGFilter_NxNPotholes: PNGFilter_main.c PNGFilter_NxNPotholes.c
 	$(CC) $(CFLAGS) $^ -o $@ -lpng -lm
 
-3x3StraightPotholes.png: 3x3Straight.png PNGFilter_3x3Potholes
-	./PNGFilter_3x3Potholes $< $@ -p 1,5 -p 9,9 -p 8,4
+3x3StraightPotholes.png: 3x3Straight.png PNGFilter_NxNPotholes
+	./PNGFilter_NxNPotholes $< $@ -p 1,5 -p 9,9 -p 8,4 -s 3
 
 
 PNGFilter_3x3SmoothRamp: PNGFilter_main.c PNGFilter_3x3SmoothRamp.c
@@ -196,36 +196,36 @@ PNGFilter_3x3SmoothRamp: PNGFilter_main.c PNGFilter_3x3SmoothRamp.c
 	./PNGFilter_3x3SmoothRamp $< $@
 
 
-PNGFilter_4x4Turn90Banking: PNGFilter_main.c PNGFilter_4x4Turn90Banking.c
+PNGFilter_NxNTurn90Banking: PNGFilter_main.c PNGFilter_NxNTurn90Banking.c
 	$(CC) $(CFLAGS) $^ -o $@ -lpng -lm
 
-PNGFilter_4x4Turn90BankingDbleDepth: PNGFilter_main.c PNGFilter_4x4Turn90BankingDbleDepth.c
+PNGFilter_NxNTurn90BankingDbleDepth: PNGFilter_main.c PNGFilter_NxNTurn90BankingDbleDepth.c
 	$(CC) $(CFLAGS) $^ -o $@ -lpng -lm
 
 
-4x4Turn90BankedBE.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -b -e -s 4
-4x4Turn90BankedB.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -b -s 4
-4x4Turn90BankedE.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -e -s 4
-4x4Turn90Banked.png: 4x4Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -s 4
-4x4Turn90BankedDbleDepth.png: 4x4Turn90.png PNGFilter_4x4Turn90BankingDbleDepth
-	./PNGFilter_4x4Turn90BankingDbleDepth $< $@
+4x4Turn90BankedBE.png: 4x4Turn90.png PNGFilter_NxNTurn90Banking
+	./PNGFilter_NxNTurn90Banking $< $@ -b -e -s 4
+4x4Turn90BankedB.png: 4x4Turn90.png PNGFilter_NxNTurn90Banking
+	./PNGFilter_NxNTurn90Banking $< $@ -b -s 4
+4x4Turn90BankedE.png: 4x4Turn90.png PNGFilter_NxNTurn90Banking
+	./PNGFilter_NxNTurn90Banking $< $@ -e -s 4
+4x4Turn90Banked.png: 4x4Turn90.png PNGFilter_NxNTurn90Banking
+	./PNGFilter_NxNTurn90Banking $< $@ -s 4
+4x4Turn90BankedDbleDepth.png: 4x4Turn90.png PNGFilter_NxNTurn90BankingDbleDepth
+	./PNGFilter_NxNTurn90BankingDbleDepth $< $@
 4x4Turn90BankedDbleDepth_auto_0.scad: 4x4Turn90BankedDbleDepth.png gen_scad
 	./gen_scad -d $(DPI) -s 0.2 $<
 
-3x3Turn90Banked.png: 3x3Turn90.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -s 3
+3x3Turn90Banked.png: 3x3Turn90.png PNGFilter_NxNTurn90Banking
+	./PNGFilter_NxNTurn90Banking $< $@ -s 3
 
-PNGFilter_3x3StraightIntoBanking: PNGFilter_main.c PNGFilter_3x3StraightIntoBanking.c
+PNGFilter_NxMStraightIntoBanking: PNGFilter_main.c PNGFilter_NxMStraightIntoBanking.c
 	$(CC) $(CFLAGS) $^ -o $@ -lpng -lm
 
-3x3StraightIntoBankingRight.png: 3x3Straight.png PNGFilter_3x3StraightIntoBanking
-	./PNGFilter_3x3StraightIntoBanking $< $@
-3x3StraightIntoBankingLeft.png: 3x3Straight.png PNGFilter_3x3StraightIntoBanking
-	./PNGFilter_3x3StraightIntoBanking $< $@ -m
+3x3StraightIntoBankingRight.png: 3x3Straight.png PNGFilter_NxMStraightIntoBanking
+	./PNGFilter_NxMStraightIntoBanking $< $@ -l 3 -w 3 -t 2
+3x3StraightIntoBankingLeft.png: 3x3Straight.png PNGFilter_NxMStraightIntoBanking
+	./PNGFilter_NxMStraightIntoBanking $< $@ -l 3 -w 3 -t 2 -m
 
 2x4-6x4Turn90Part1.png: 6x4Turn90.png
 	convert $< -crop 240x480+0+0 $@
@@ -300,6 +300,6 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 4x4Turn90Width3.png: PNGSynth
 	./PNGSynth $@ -t 3 -f turn90 -l 4 -w 4
 
-4x4Turn90Width3Banked.png: 4x4Turn90Width3.png PNGFilter_4x4Turn90Banking
-	./PNGFilter_4x4Turn90Banking $< $@ -s 4 -t 3
+4x4Turn90Width3Banked.png: 4x4Turn90Width3.png PNGFilter_NxNTurn90Banking
+	./PNGFilter_NxNTurn90Banking $< $@ -s 4 -t 3
 

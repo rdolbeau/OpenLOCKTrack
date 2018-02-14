@@ -21,7 +21,7 @@
 
 #include "PNGFilter_main.h"
 
-#define FNAME "PNGFilter_4x4Turn90Banking"
+#define FNAME "PNGFilter_NxNTurn90Banking"
 
 void filter(pngstruct *png, int argc, char **argv) {
 	char c;

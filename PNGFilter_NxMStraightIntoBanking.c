@@ -21,19 +21,40 @@
 
 #include "PNGFilter_main.h"
 
-#define FNAME "PNGFilter_3x3StraightIntoBanking"
+#define FNAME "PNGFilter_NxMStraightIntoBanking"
 
 void filter(pngstruct *png, int argc, char **argv) {
 	char c;
 	extern int optind, optopt;
 	int x, y;
 	int mirror = 0;
+	int width = 3;
+	int length = 3;
+	double tw = 2;
 	
-	while ((c = getopt (argc, argv, "m")) != -1) {
+	while ((c = getopt (argc, argv, "mw:l:s:t:")) != -1) {
 		switch (c)
 		{
 		case 'm':
 			mirror = 1;
+			break;
+		case 'w':
+			width = atoi(optarg);
+			if (width < 1 || width > 6) {
+				abort_("Wrong width specified");
+			}
+			break;
+		case 'l':
+			length = atoi(optarg);
+			if (length < 1 || length > 6) {
+				abort_("Wrong length specified");
+			}
+			break;
+		case 't':
+			tw = atof(optarg);
+			if (tw < 2. || tw > 6.) {
+				abort_("Wrong trackwidth specified");
+			}
 			break;
 		default:
 			abort_("Unknown option to filter %", FNAME);
@@ -46,45 +67,45 @@ void filter(pngstruct *png, int argc, char **argv) {
         /* Reduce any 16-bits-per-sample images to 8-bits-per-sample */
         png_set_strip_16(png->png_ptr);
 
-	int dpi = png->height/3; // should be a 3x3 tile
+	int dpi = png->height/width;
 
         for (y=0; y<png->height; y++) {
                 png_byte* row = png->row_pointers[y];
                 for (x=0; x<png->width; x++) {
-			int dpi2 = png->width/3; // should be a 3x3 tile
+			int dpi2 = png->width/length;
 			if (dpi != dpi2) {
-				abort_("%s: non-square PNG", FNAME);
+				abort_("%s: wrong sized PNG", FNAME);
 			}
                         png_byte* ptr = &(row[x*4]);
 			
-			int cy = y;
+			double cy = y;
 			if (mirror)
-				cy = (3*dpi)-y;
+				cy = ((double)width*(double)dpi)-y;
 			double bankingheight = 162.; // only 1/4 inch, but can't be much higher...
-			if ((cy >= (0.5*dpi)) && (cy <= (2.5*dpi))) { // banked track
+			double inner = (width - (tw + 0.5)) * dpi;
+			double outer = (width - 0.5) * dpi;
+			double outerb = (width - 0.4) * dpi;
+			if ((cy >= inner) && (cy <= outer)) { // banked track
 				double ldist = cy - 0.5 * dpi;
-				double doffset = bankingheight * (cos(M_PI/2.+M_PI/2.*(1.-ldist/(2.*dpi)))+1.);
-	                        double hdist = (3.*dpi)-(3.*dpi-x);
-       		                double sdist = (cos(M_PI*(1.-hdist/(3.*dpi)))+1.)/2.;
+				double doffset = bankingheight * (cos(M_PI/2.+M_PI/2.*(1.-ldist/(tw*dpi)))+1.);
+       		                double sdist = (cos(M_PI*(1.-x/((double)length*(double)dpi)))+1.)/2.;
 				int offset = floor(doffset*sdist);
 				ptr[0] += offset;
 				ptr[1] += offset;
 				ptr[2] += offset;
 			} else
-			if ((cy >= (2.5*dpi)) && (cy <= (2.6*dpi))) { // raise outer border
+			if ((cy >= outer) && (cy <= outerb)) { // raise outer border
 				double doffset = bankingheight;
-                                double hdist = (3.*dpi)-(3.*dpi-x);
-                                double sdist = (cos(M_PI*(1.-hdist/(3.*dpi)))+1.)/2.;
+                                double sdist = (cos(M_PI*(1.-x/((double)length*(double)dpi)))+1.)/2.;
                                 int offset = floor(doffset*sdist);
                                 ptr[0] += offset;
                                 ptr[1] += offset;
                                 ptr[2] += offset;
 			} else
-                        if ((cy >= (2.6*dpi)) && (cy < (3.0*dpi))) { // remove cliff by sloping the texture
-				double ldist = cy - 2.6 * dpi;
+			if ((cy >= outerb) && (cy < ((double)width * (double)dpi))) { // remove cliff by sloping the texture
+				double ldist = cy - outerb;
 				double doffset = bankingheight * (cos(M_PI*(ldist/(0.4*dpi)))+1.)/2.;
-                                double hdist = (3.*dpi)-(3.*dpi-x);
-                                double sdist = (cos(M_PI*(1.-hdist/(3.*dpi)))+1.)/2.;
+                                double sdist = (cos(M_PI*(1.-x/((double)length*(double)dpi)))+1.)/2.;
                                 int offset = floor(doffset*sdist);
                                 ptr[0] += offset;
                                 ptr[1] += offset;
