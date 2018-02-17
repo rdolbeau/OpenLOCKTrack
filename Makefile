@@ -164,6 +164,10 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 3x3StraightPotholes_auto_1.scad: 3x3StraightPotholes.png gen_scad
 	./gen_scad -d $(DPI) -L 0 -E 1 $<
 
+# poles to support a banner
+1x3Straight_poles_auto_0.scad: 1x3Straight.png
+	./gen_scad -d $(DPI) -P $<
+
 # default rule to generate the STL
 %.stl: %.scad
 	$(OPENSCAD) $< -o $@
@@ -294,12 +298,15 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 4x5StraightWidth3to4.png: PNGSynth
 	./PNGSynth $@ -t 3 -f side -f straight -l 4 -w 5
 
-2x4StraightWidth3.png: PNGSynth
+2x4W3Straight.png: PNGSynth
 	./PNGSynth $@ -t 3 -f straight -l 2 -w 4
 
-4x4Turn90Width3.png: PNGSynth
+4x4W3Turn90.png: PNGSynth
 	./PNGSynth $@ -t 3 -f turn90 -l 4 -w 4
 
-4x4Turn90Width3Banked.png: 4x4Turn90Width3.png PNGFilter_NxNTurn90Banking
+4x4W3Crossing.png: PNGSynth
+	./PNGSynth $@ -t 3 -f straight -T -f straight -T -l 4 -w 4
+
+4x4W3Turn90Banked.png: 4x4W3Turn90.png PNGFilter_NxNTurn90Banking
 	./PNGFilter_NxNTurn90Banking $< $@ -s 4 -t 3
 

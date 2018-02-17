@@ -235,6 +235,15 @@ void addturretbasescad(FILE *out, const int x, const int y) {
 fprintf(out, "translate(v=[-2+%d*myinch,-15+(2-%d)*myinch,7]) {scale(v=[2/3,2/3,2/3]) { import(\"death_star_assembly_1.1.stl\");}}\n", x, y);
 }
 
+void addpolesscad(FILE *out) {
+fprintf(out, "module mypole() {\n");
+fprintf(out, "\tcylinder (r1=myinch/8,r2=myinch/8,myinch/8);\n");
+fprintf(out, "\tcylinder (r1=myinch/16,r2=myinch/16-0.2,3/2*myinch);\n");
+fprintf(out, "}\n");
+fprintf(out, "translate(v=[myinch/4,-myinch/4,7]) { mypole();}\n");
+fprintf(out, "translate(v=[myinch/4,-11*myinch/4,7]) { mypole();}\n");
+}
+
 int findsizes(float *fx, float *fy, const char *file) {
 	int r = sscanf(file, "%fx%f", fx, fy);
 	/* 	printf("%s: %d (%d, %d)\n", file, r, *fx, *fy); */
@@ -262,8 +271,9 @@ int main(int argc, char **argv) {
 	float depthscale = .1;
 	int turret = 0;
 	int pturret[2];
+	int poles = 0;
 	
-	while ((c = getopt (argc, argv, "d:x:y:X:Y:T:L:E:s:t:")) != -1) {
+	while ((c = getopt (argc, argv, "d:x:y:X:Y:T:L:E:s:t:P")) != -1) {
 		switch (c)
 		{
 		case 'd':
@@ -343,6 +353,9 @@ int main(int argc, char **argv) {
 				exit(-1);
 			}
 			break;
+		case 'P':
+			poles = !poles;
+			break;
 		default:
 			return -1;
 		}
@@ -353,8 +366,8 @@ int main(int argc, char **argv) {
 		if ((nfiles > 0) &&
 		    ((cropx != -1.) || (cropy != -1.) ||
 		     (movx != 0.) || (movy != 0.) ||
-		     (Ytriangle != 0) || (OAtriangle != 0) || (Vqcircle !=0))) {
-			fprintf(stderr, "More than one file and (moving or cropping or triangle), dunno how to do that\n");
+		     (Ytriangle != 0) || (OAtriangle != 0) || (Vqcircle !=0) || turret || poles)) {
+			fprintf(stderr, "More than one file and (moving or cropping or triangle or turret or poles), dunno how to do that\n");
 			exit(-2);
 		}
 		files[nfiles] = strndup(argv[optind], 4096);
@@ -382,6 +395,10 @@ int main(int argc, char **argv) {
 			rcropy = fy;
 		else
 			rcropy = cropy;
+		if ((poles) && ((fy != 3.) || Ytriangle || OAtriangle || Vqcircle)) {
+			fprintf(stderr, "Poles only supported on 3\" wide rectangular pieces at the moment\n");
+			exit(-5);
+		}
 		if (r && Ytriangle) {
 			if (fx != 4.|| fy != 4.) {
 				fprintf(stderr, "I only know how to triangularize 4x4 pieces.\n");
@@ -440,6 +457,7 @@ int main(int argc, char **argv) {
 				char movxname[128];
 				char movyname[128];
 				char turretname[128];
+				char polesname[128];
 				if (cropx != -1.) {
 					snprintf(cropxname, 128, "cx%3.1f", cropx);
 				} else cropxname[0] = '\0';
@@ -453,8 +471,10 @@ int main(int argc, char **argv) {
 					snprintf(movyname, 128, "my%3.1f", movy);
 				} else movyname[0] = '\0';
 				snprintf(turretname, 128, "_turret%dx%d", pturret[0], pturret[1]);
-				snprintf(outname, 4096, "%s%s_auto_%d%s%s%s%s.scad", files[i],
+				snprintf(polesname, 128, "_poles");
+				snprintf(outname, 4096, "%s%s%s_auto_%d%s%s%s%s.scad", files[i],
 					 turret ? turretname : "",
+					 poles ? polesname : "",
 					 namelayer,
 					 cropxname, cropyname,
 					 movxname, movyname);
@@ -464,6 +484,10 @@ int main(int argc, char **argv) {
 				if (turret) {
 					printf("Adding turret in %dx%d\n", pturret[0], pturret[1]);
 					addturretbasescad(out, pturret[0], pturret[1]);
+				}
+				if (poles) {
+					printf("Adding poles\n");
+					addpolesscad(out);
 				}
 				fclose(out);
 			} else {
