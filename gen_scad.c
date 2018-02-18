@@ -17,12 +17,14 @@ const openlockrect openlockrectdb[] = {
 	{3.,3.,"EA-TRP-v7.0.stl"},
 	{4.,4.,"U-TRP-v7.0.stl"},
 	{6.,6.,"6x6-TRP-v7.0.stl"},
+	{1.5,1.5,"ED-TRP-v7.0.stl"},
 	/* rectangles */
 	{2.,1.,"S-TRP-v7.0.stl"},
 	{3.,1.,"SA-TRP-v7.0.stl"},
 	{4.,1.,"SB-TRP-v7.1.stl"},
 	{4.,2.,"R-TRP-v7.0.stl"},
 	{2.,2.5,"E+A-TRP-v7.0.stl"},
+	{1.5,2.,"EC-TRP-v7.0.stl"},
 	{-1.,-1.,NULL}
 };
 
