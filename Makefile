@@ -5,6 +5,8 @@ OPENSCAD=/usr/local/openscad-openscad-2015.03/bin/openscad
 INKSCAPE=inkscape
 DPI=120
 
+.SECONDARY:
+
 all:gen_scad
 
 gen_scad: gen_scad.c
@@ -67,7 +69,13 @@ STL1S=	3x1Straight_auto_1.stl \
 # STL from manual scad
 EXTRASTLS=3x1CheckPoint.stl 3x1Ramp0_1.stl 3x1Ramp0_2.stl 3x1Ramp1_2.stl
 
-SCADS=$(STLS:.stl=.scad) $(STL1S:.stl=.scad)
+# Other-than-2 track size
+
+MORESTLS=2x4StraightWidth2to3_auto_0.stl 2x4StraightWidth2to3Left_auto_0.stl 2x4W3Straight_auto_0.stl 4x4W3Turn90_auto_0.stl \
+	2x4StraightWidth2to3_auto_1.stl 2x4StraightWidth2to3Left_auto_1.stl 2x4W3Straight_auto_1.stl 4x4W3Turn90_auto_1.stl
+# 1x4W3Straight_auto_0.stl 1x4W3Straight_auto_1.stl # seems to have an issue in OpenSCAD (SB base ?)
+
+SCADS=$(STLS:.stl=.scad) $(STL1S:.stl=.scad) $(MORESTLS)
 
 GENPNGS=3x3Straight.png 3x3Crossing.png 3x3Turn90.png 4x4Side1.png 6x6Turn90.png 4x4Yinter90.png
 
@@ -295,11 +303,17 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 2x4StraightWidth2to3.png: PNGSynth
 	./PNGSynth $@ -t 1 -F -f middleside -F -t 2 -f straight -l 2 -w 4
 
+2x4StraightWidth2to3Left.png: PNGSynth
+	./PNGSynth $@ -t 1 -f middleside -F -t 2 -f straight -l 2 -w 4
+
 4x5StraightWidth3to4.png: PNGSynth
 	./PNGSynth $@ -t 3 -f side -f straight -l 4 -w 5
 
 2x4W3Straight.png: PNGSynth
 	./PNGSynth $@ -t 3 -f straight -l 2 -w 4
+
+1x4W3Straight.png: PNGSynth
+	./PNGSynth $@ -t 3 -f straight -l 1 -w 4
 
 4x4W3Turn90.png: PNGSynth
 	./PNGSynth $@ -t 3 -f turn90 -l 4 -w 4
