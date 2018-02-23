@@ -140,7 +140,7 @@ int find_track_fun(const char *fname) {
 	return -1;
 }
 
-
+#ifndef NO_PROC_SYNTH
 void synth(pngstruct *png, int argc, char **argv) {
 	char c;
 	extern int optind, optopt;
@@ -292,3 +292,4 @@ void synth(pngstruct *png, int argc, char **argv) {
 	if (dogrid)
 		grid(png, dpi);
 }
+#endif

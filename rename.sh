@@ -90,6 +90,7 @@ update 3x1CheckPoint.stl $SUBDIR/SA-$DEV-W2CheckPoint-Lvl0-v$VER.stl.bz2
 update 3x1Ramp0_1.stl $SUBDIR/SA-$DEV-W2Ramp-Lvl0-Lvl1-v$VER.stl.bz2
 update 3x1Ramp0_2.stl $SUBDIR/SA-$DEV-W2Ramp-Lvl0-Lvl2-v$VER.stl.bz2
 update 3x1Ramp1_2.stl $SUBDIR/SA-$DEV-W2Ramp-Lvl1-Lvl2-v$VER.stl.bz2
+update 1x3Straight_poles_auto_0.stl $SUBDIR/SA-$DEV-W2StraightPoles-Lvl0-v$VER.stl.bz2
 update 3x3StraightPotholes_auto_1.stl $SUBDIR/EA-$DEV-W2StraightPotholes-Lvl1-v$VER.stl.bz2
 update 4x4Yinter90Raised_auto_0.stl $SUBDIR/U-$DEV-W2Yinter90Raised-Lvl0-Lvl1-v$VER.stl.bz2
 update 3x3SmoothRamp_auto_0.stl $SUBDIR/EA-$DEV-W2SmoothRamp-Lvl0-Lvl1-v$VER.stl.bz2

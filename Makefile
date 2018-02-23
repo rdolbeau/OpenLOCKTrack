@@ -176,6 +176,10 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 1x3Straight_poles_auto_0.scad: 1x3Straight.png
 	./gen_scad -d $(DPI) -P $<
 
+# Wall example
+3x3Straight_wall1_auto_0.scad: 3x3Straight.png
+	./gen_scad -d $(DPI) -w 0x1 $<
+
 # default rule to generate the STL
 %.stl: %.scad
 	$(OPENSCAD) $< -o $@

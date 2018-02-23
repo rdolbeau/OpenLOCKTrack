@@ -246,6 +246,32 @@ fprintf(out, "translate(v=[myinch/4,-myinch/4,7]) { mypole();}\n");
 fprintf(out, "translate(v=[myinch/4,-11*myinch/4,7]) { mypole();}\n");
 }
 
+void addwallscad(FILE *out, const int wall[4], const float fx, const float fy) {
+	fprintf(out, "include <Wall.scad>\n");
+	if (wall[0]) {
+		fprintf(out, "mywall(walllength=myinch*%f);\n", fx);
+	}
+	if (wall[1]) {
+		fprintf(out, "translate(v=[1,0,0]) {\n");
+		fprintf(out, "\trotate(-90,v=[0,0,1]) {\n");
+		fprintf(out, "\t\ttranslate(v=[0,1+myinch/3,0]){\n");
+		fprintf(out, "\t\t\tmywall(walllength=myinch*%f);\n",fy);
+		fprintf(out, "}}}\n");
+	}
+	if (wall[2]) {
+		fprintf(out, "translate(v=[0,-myinch*%f+(2+myinch/3)]) {\n", fy);
+		fprintf(out, "mywall(walllength=myinch*%f);\n", fx);
+		fprintf(out, "}\n");
+	}
+	if (wall[3]) {
+		fprintf(out, "translate(v=[1+myinch*%f-(2+myinch/3),0,0]) {\n",fx);
+		fprintf(out, "\trotate(-90,v=[0,0,1]) {\n");
+		fprintf(out, "\t\ttranslate(v=[0,1+myinch/3,0]){\n");
+		fprintf(out, "\t\t\tmywall(walllength=myinch*%f);\n",fy);
+		fprintf(out, "}}}\n");
+	}
+}
+
 int findsizes(float *fx, float *fy, const char *file) {
 	int r = sscanf(file, "%fx%f", fx, fy);
 	/* 	printf("%s: %d (%d, %d)\n", file, r, *fx, *fy); */
@@ -274,8 +300,10 @@ int main(int argc, char **argv) {
 	int turret = 0;
 	int pturret[2];
 	int poles = 0;
+	int wall[4] = {0, 0, 0, 0};
+	int temp;
 	
-	while ((c = getopt (argc, argv, "d:x:y:X:Y:T:L:E:s:t:P")) != -1) {
+	while ((c = getopt (argc, argv, "d:x:y:X:Y:T:L:E:s:t:P:w:")) != -1) {
 		switch (c)
 		{
 		case 'd':
@@ -357,6 +385,11 @@ int main(int argc, char **argv) {
 			break;
 		case 'P':
 			poles = !poles;
+			break;
+		case 'w':
+			temp = strtol(optarg, NULL, 0);
+			for (i = 0 ; i < 4 ; i++)
+				wall[i] = temp & 1<<i;
 			break;
 		default:
 			return -1;
@@ -474,9 +507,13 @@ int main(int argc, char **argv) {
 				} else movyname[0] = '\0';
 				snprintf(turretname, 128, "_turret%dx%d", pturret[0], pturret[1]);
 				snprintf(polesname, 128, "_poles");
-				snprintf(outname, 4096, "%s%s%s_auto_%d%s%s%s%s.scad", files[i],
+				snprintf(outname, 4096, "%s%s%s%s%s%s%s_auto_%d%s%s%s%s.scad", files[i],
 					 turret ? turretname : "",
 					 poles ? polesname : "",
+					 wall[0] ? "_wall1" : "",
+					 wall[1] ? "_wall2" : "",
+					 wall[2] ? "_wall3" : "",
+					 wall[3] ? "_wall4" : "",
 					 namelayer,
 					 cropxname, cropyname,
 					 movxname, movyname);
@@ -490,6 +527,9 @@ int main(int argc, char **argv) {
 				if (poles) {
 					printf("Adding poles\n");
 					addpolesscad(out);
+				}
+				if (wall[0] || wall[1] || wall[2] || wall[3]) {
+					addwallscad(out, wall, fx, fy);
 				}
 				fclose(out);
 			} else {
