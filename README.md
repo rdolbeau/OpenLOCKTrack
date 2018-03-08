@@ -49,6 +49,10 @@ Some parts use hand-written OpenSCAD code, such as 3x1 ramps and 3x1 with text.
 
 Finally, OpenSCAD is used to generated the STL. **BEWARE**: The surface() operator in OpenSCAD seems a bit memory-hungry. Generating the STL files from a 6"x6" PNG at 120 dpi takes around 20 GBytes of memory! The 3"x3" pieces are already requiring between 4 and 5 GB. So if you want to regenerate the files or make your own, make sure your computer can handle it.
 
+#### The PNG auto-generator.
+
+I should document this one. Beware, the output PNG has a zero Alpha channel and seems (but isn't) mepy in some viewers.
+
 #### The SCAD auto-generator
 
 The auto-generator takes the name of a PNG file (the name must start as MxN with M the width and N the length of the PNG, i.e. 3x3 for a 3"x3" PNG). It outputs the OpenSCAD using that file, picking the appropriate OpenLOCK base. Optionally, it can extract only some of the PNG (a rectangular piece at an offset) and put it on a base appropriate for the extracted part. It can also do some specific cuttings for Y, OA or V base. It can also change the level for the whole piece.
