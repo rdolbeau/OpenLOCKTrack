@@ -2,7 +2,6 @@ CC=gcc
 CFLAGS=-O2 -Wall
 
 OPENSCAD=/usr/local/openscad-openscad-2015.03/bin/openscad
-INKSCAPE=inkscape
 DPI=120
 
 .SECONDARY:
@@ -13,7 +12,8 @@ gen_scad: gen_scad.c
 	$(CC) $(CFLAGS) $< -o $@
 
 # STL from auto-generated scad, Level 0 
-STLS=	3x1Straight_auto_0.stl \
+STLS=	1x3Straight_poles_auto_0.stl \
+	3x1Straight_auto_0.stl \
 	3x3Crossing_auto_0.stl \
 	3x3Straight_auto_0.stl \
 	3x3ChokePoint_auto_0.stl \
@@ -84,6 +84,8 @@ allscad: $(SCADS)
 
 # convert scad to stl (IT TAKES A LOT OF MEMORY !)
 allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
+
+allpng: $(STLS:.stl=.png) $(STL1S:.stl=.png) $(EXTRASTLS:.stl=.png) $(MORESTLS:.stl=.png)
 
 # default rule for the simple stuff, using
 # a PNG on a regular OpenLOCK piece
@@ -164,8 +166,21 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 3x1Ramp1_2.stl: 3x1Ramp0_1.scad 3x1Straight.png
 	$(OPENSCAD) -Dlow=1 -Dheight=1 $< -o $@
 
+
+3x1Ramp0_1.png: 3x1Ramp0_1.scad 3x1Straight.png
+	$(OPENSCAD) -Dlow=0 -Dheight=1 $< -o $@
+
+3x1Ramp0_2.png: 3x1Ramp0_1.scad 3x1Straight.png
+	$(OPENSCAD) -Dlow=0 -Dheight=2 $< -o $@
+
+3x1Ramp1_2.png: 3x1Ramp0_1.scad 3x1Straight.png
+	$(OPENSCAD) -Dlow=1 -Dheight=1 $< -o $@
+
 # checkpoint
 3x1CheckPoint.stl: 3x1CheckPoint.scad 3x1Straight.png
+	$(OPENSCAD) $< -o $@
+
+3x1CheckPoint.png: 3x1CheckPoint.scad 3x1Straight.png
 	$(OPENSCAD) $< -o $@
 
 # Potholes - there use -L 0 but are Lvl1 because of the post-processing
@@ -182,6 +197,9 @@ allstl: allscad $(STLS) $(STL1S) $(EXTRASTLS)
 
 # default rule to generate the STL
 %.stl: %.scad
+	$(OPENSCAD) $< -o $@
+
+%.png: %.scad
 	$(OPENSCAD) $< -o $@
 
 clean:
