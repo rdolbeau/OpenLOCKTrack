@@ -74,6 +74,10 @@ for L in 0 1; do
     update 2x4-6x4Turn90LPart1_auto_"$L".png $SUBDIR/R-$DEV-W2Turn90L-6x4Part1-Lvl"$L"-v$VER.png
     update 2x4-6x4Turn90LPart2_auto_"$L".png $SUBDIR/R-$DEV-W2Turn90L-6x4Part2-Lvl"$L"-v$VER.png
     update 2x4-6x4Turn90LPart3_auto_"$L".png $SUBDIR/R-$DEV-W2Turn90L-6x4Part3-Lvl"$L"-v$VER.png
+
+    update 3x3Turn90_wall1_auto_"$L".png     $SUBDIR/EA-$DEV-W2Turn90-3-Wall1-Lvl"$L"-v$VER.png
+    update 3x3Turn90_wall2_auto_"$L".png     $SUBDIR/EA-$DEV-W2Turn90-3-Wall2-Lvl"$L"-v$VER.png
+    update 3x3Straight_wall1_auto_"$L".png   $SUBDIR/EA-$DEV-W2Straight-Wall1-Lvl"$L"-v$VER.png
 done
 
 # Other track width & track width change

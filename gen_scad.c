@@ -246,8 +246,11 @@ fprintf(out, "translate(v=[myinch/4,-myinch/4,7]) { mypole();}\n");
 fprintf(out, "translate(v=[myinch/4,-11*myinch/4,7]) { mypole();}\n");
 }
 
-void addwallscad(FILE *out, const int wall[4], const float fx, const float fy) {
+void addwallscad(FILE *out, const int wall[4], const int layer, const float fx, const float fy) {
 	fprintf(out, "include <Wall.scad>\n");
+	if (layer > 0) {
+		fprintf(out, "translate(v=[0,0,%d*myinch/4]) { // layer translate\n", layer);
+	}
 	if (wall[0]) {
 		fprintf(out, "mywall(walllength=myinch*%f);\n", fx);
 	}
@@ -269,6 +272,9 @@ void addwallscad(FILE *out, const int wall[4], const float fx, const float fy) {
 		fprintf(out, "\t\ttranslate(v=[0,1+myinch/3,0]){\n");
 		fprintf(out, "\t\t\tmywall(walllength=myinch*%f);\n",fy);
 		fprintf(out, "}}}\n");
+	}
+	if (layer > 0) {
+		fprintf(out, "} // layer translate\n");
 	}
 }
 
@@ -529,7 +535,7 @@ int main(int argc, char **argv) {
 					addpolesscad(out);
 				}
 				if (wall[0] || wall[1] || wall[2] || wall[3]) {
-					addwallscad(out, wall, fx, fy);
+					addwallscad(out, wall, layer, fx, fy);
 				}
 				fclose(out);
 			} else {

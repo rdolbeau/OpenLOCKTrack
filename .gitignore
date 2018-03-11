@@ -1,6 +1,7 @@
 *~
 gen_scad
 *.stl
+*_auto_*.png
 PNGFilter_NxNPotholes
 PNGFilter_3x3SmoothRamp
 PNGFilter_NxNTurn90Banking

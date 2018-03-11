@@ -38,7 +38,8 @@ STLS=	1x3Straight_poles_auto_0.stl \
 	4x4Yinter90_auto_0.stl \
 	4x4Yinter90Raised_auto_0.stl \
 	3x3SmoothRamp_auto_0.stl \
-	3x3StraightIntoBankingRight_auto_0.stl 3x3StraightIntoBankingLeft_auto_0.stl
+	3x3StraightIntoBankingRight_auto_0.stl 3x3StraightIntoBankingLeft_auto_0.stl \
+	3x3Straight_wall1_auto_0.stl 3x3Turn90_wall1_auto_0.stl 3x3Turn90_wall2_auto_0.stl
 
 STL1S=	3x1Straight_auto_1.stl \
 	3x3Crossing_auto_1.stl \
@@ -64,6 +65,7 @@ STL1S=	3x1Straight_auto_1.stl \
 	3x3Turn90Banked_auto_1.stl \
 	4x4Yinter90_auto_1.stl \
 	3x3StraightIntoBankingRight_auto_1.stl 3x3StraightIntoBankingLeft_auto_1.stl \
+	3x3Straight_wall1_auto_1.stl 3x3Turn90_wall1_auto_1.stl 3x3Turn90_wall2_auto_1.stl \
 	3x3StraightPotholes_auto_1.stl
 
 # STL from manual scad
@@ -191,9 +193,24 @@ allpng: $(STLS:.stl=.png) $(STL1S:.stl=.png) $(EXTRASTLS:.stl=.png) $(MORESTLS:.
 1x3Straight_poles_auto_0.scad: 1x3Straight.png
 	./gen_scad -d $(DPI) -P $<
 
-# Wall example
+# Wall examples
 3x3Straight_wall1_auto_0.scad: 3x3Straight.png
 	./gen_scad -d $(DPI) -w 0x1 $<
+
+3x3Turn90_wall1_auto_0.scad: 3x3Turn90.png
+	./gen_scad -d $(DPI) -w 0x1 $<
+
+3x3Turn90_wall2_auto_0.scad: 3x3Turn90.png
+	./gen_scad -d $(DPI) -w 0x2 $<
+
+3x3Straight_wall1_auto_1.scad: 3x3Straight.png
+	./gen_scad -d $(DPI) -L 1 -w 0x1 $<
+
+3x3Turn90_wall1_auto_1.scad: 3x3Turn90.png
+	./gen_scad -d $(DPI) -L 1 -w 0x1 $<
+
+3x3Turn90_wall2_auto_1.scad: 3x3Turn90.png
+	./gen_scad -d $(DPI) -L 1 -w 0x2 $<
 
 # default rule to generate the STL
 %.stl: %.scad
@@ -346,3 +363,7 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 4x4W3Turn90Banked.png: 4x4W3Turn90.png PNGFilter_NxNTurn90Banking
 	./PNGFilter_NxNTurn90Banking $< $@ -s 4 -t 3
 
+
+#### useful stuff
+rename_preview.sh: rename.sh
+	cp -f rename.sh rename_preview.sh && sed -i -e 's/\.stl\.bz2/.png/g' -e 's/\.stl/.png/g' -e 's/SUBDIR=export/SUBDIR=previews/' -e 's/BZIP2="bzip2 -c"/BZIP2="cat"/' rename_preview.sh
