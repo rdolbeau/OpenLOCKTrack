@@ -336,6 +336,7 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 	./PNGSynth $@ -t 2 -f turn90 -f straight -l 4 -w 4
 
 ##### Wider track
+# Convert W2 to W3
 4x4StraightWidth2to3.png: PNGSynth
 	./PNGSynth $@ -t 2 -f side -f straight -l 4 -w 4
 
@@ -347,7 +348,16 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 
 4x5StraightWidth3to4.png: PNGSynth
 	./PNGSynth $@ -t 3 -f side -f straight -l 4 -w 5
+2x2.5-4x5StraightWidth3to4Part1.png: 4x5StraightWidth3to4.png
+	convert $< -crop 240x300+0+0 $@
+2x2.5-4x5StraightWidth3to4Part2.png: 4x5StraightWidth3to4.png
+	convert $< -crop 240x300+0+300 $@
+2x2.5-4x5StraightWidth3to4Part3.png: 4x5StraightWidth3to4.png
+	convert $< -crop 240x300+240+0 $@
+2x2.5-4x5StraightWidth3to4Part4.png: 4x5StraightWidth3to4.png
+	convert $< -crop 240x300+240+300 $@
 
+# Width 3
 2x4W3Straight.png: PNGSynth
 	./PNGSynth $@ -t 3 -f straight -l 2 -w 4
 
@@ -363,6 +373,13 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 4x4W3Turn90Banked.png: 4x4W3Turn90.png PNGFilter_NxNTurn90Banking
 	./PNGFilter_NxNTurn90Banking $< $@ -s 4 -t 3
 
+# Width 4
+2x5W4Straight.png: PNGSynth
+	./PNGSynth $@ -t 4 -f straight -l 2 -w 5
+2x2.5-2x5W4StraightPart1.png: 2x5W4Straight.png
+	convert $< -crop 240x300+0+0 $@
+2x2.5-2x5W4StraightPart2.png: 2x5W4Straight.png
+	convert $< -crop 240x300+0+300 $@
 
 #### useful stuff
 rename_preview.sh: rename.sh

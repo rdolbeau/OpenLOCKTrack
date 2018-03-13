@@ -8,6 +8,10 @@ VER=1.0
 #/bin/rm -rf $SUBDIR
 
 mkdir -p $SUBDIR
+mkdir -p $SUBDIR/TrackWidth2
+mkdir -p $SUBDIR/TrackWidth3
+mkdir -p $SUBDIR/TrackWidth4
+mkdir -p $SUBDIR/TrackWidthChange
 
 update() {
     if test -e $1 -a \( \( \! -e $2  \) -o \( $1 -nt $2 \) \); then
@@ -82,15 +86,25 @@ done
 
 # Track width change
 for L in 0 1; do
+# Width 2 to 3
     update 2x4StraightWidth2to3_auto_"$L".stl $SUBDIR/TrackWidthChange/R-$DEV-StraightW2to3-Lvl"$L"-v$VER.stl.bz2
     update 2x4StraightWidth2to3Left_auto_"$L".stl $SUBDIR/TrackWidthChange/R-$DEV-StraightW2to3Left-Lvl"$L"-v$VER.stl.bz2
+# Width 4 to 4
+    update 2x2.5-4x5StraightWidth3to4Part1_auto_"$L".stl $SUBDIR/TrackWidthChange/E+A-$DEV-StraightW3to4Part1-Lvl"$L"-v$VER.stl.bz2
+    update 2x2.5-4x5StraightWidth3to4Part2_auto_"$L".stl $SUBDIR/TrackWidthChange/E+A-$DEV-StraightW3to4Part2-Lvl"$L"-v$VER.stl.bz2
+    update 2x2.5-4x5StraightWidth3to4Part3_auto_"$L".stl $SUBDIR/TrackWidthChange/E+A-$DEV-StraightW3to4Part3-Lvl"$L"-v$VER.stl.bz2
+    update 2x2.5-4x5StraightWidth3to4Part4_auto_"$L".stl $SUBDIR/TrackWidthChange/E+A-$DEV-StraightW3to4Part4-Lvl"$L"-v$VER.stl.bz2
 done
 
 # Other track width
 for L in 0 1; do
+# Width 3
     update 2x4W3Straight_auto_"$L".stl        $SUBDIR/TrackWidth3/R-$DEV-W3Straight-Lvl"$L"-v$VER.stl.bz2
 #    update 1x4W3Straight_auto_"$L".stl        $SUBDIR/TrackWidth3/SB-$DEV-W3Straight-Lvl"$L"-v$VER.stl.bz2
     update 4x4W3Turn90_auto_"$L".stl          $SUBDIR/TrackWidth3/U-$DEV-W3Turn90-Lvl"$L"-v$VER.stl.bz2
+# Width 4
+    update 2x2.5-2x5W4StraightPart1_auto_"$L".stl        $SUBDIR/TrackWidth4/E+A-$DEV-W4StraightPart1-Lvl"$L"-v$VER.stl.bz2
+    update 2x2.5-2x5W4StraightPart2_auto_"$L".stl        $SUBDIR/TrackWidth4/E+A-$DEV-W4StraightPart2-Lvl"$L"-v$VER.stl.bz2
 done
 
 # Ramps and the checkpoint and other not-by-layer stuff
