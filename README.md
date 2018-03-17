@@ -9,6 +9,12 @@ Each tile represents a section of track, that can be attached to other sections 
 
 The tiles are meant to be printed using a 3D printer.
 
+The STL files are in the directory "export", compressed with bzip2.
+
+Previews of the files are available in the directory "previews", in PNG format.
+
+Both "export" and "previews" have subdirectories indicating the track width in inches of the files. Most files are in the 2" track width. Tiles to adapt between track width are in the subdirectory TrackWidthChange.
+
 ![OpenLOCK compatible](Whats-OpenLOCK.jpg)
 
 ##  Licensing
