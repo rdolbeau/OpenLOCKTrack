@@ -233,8 +233,8 @@ fprintf(out, "}\n");
         fprintf(out, "}\n"); // union
 }
 
-void addturretbasescad(FILE *out, const int x, const int y) {
-fprintf(out, "translate(v=[-2+%d*myinch,-15+(2-%d)*myinch,7]) {scale(v=[2/3,2/3,2/3]) { import(\"death_star_assembly_1.1.stl\");}}\n", x, y);
+void addturretbasescad(FILE *out, int layer, const int x, const int y) {
+	fprintf(out, "translate(v=[-2+%d*myinch,-15+(2-%d)*myinch,7+%d*myinch/4]) {scale(v=[2/3,2/3,2/3]) { import(\"death_star_assembly_1.1.stl\");}}\n", x, y, layer);
 }
 
 void addpolesscad(FILE *out) {
@@ -528,7 +528,7 @@ int main(int argc, char **argv) {
 				printscad(out, ol, files[i], layer, dpi, fx, fy, -movx, movy, rcropx, rcropy, rotate, depthscale);
 				if (turret) {
 					printf("Adding turret in %dx%d\n", pturret[0], pturret[1]);
-					addturretbasescad(out, pturret[0], pturret[1]);
+					addturretbasescad(out, layer, pturret[0], pturret[1]);
 				}
 				if (poles) {
 					printf("Adding poles\n");

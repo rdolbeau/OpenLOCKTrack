@@ -18,6 +18,7 @@ STLS=	1x3Straight_poles_auto_0.stl \
 	3x3Straight_auto_0.stl \
 	3x3ChokePoint_auto_0.stl \
 	3x3Turn90_auto_0.stl \
+	3x3Turn90_turret0x0_auto_0.stl \
 	4x4Turn90_auto_0.stl \
 	4x4Turn90_auto_0Y1.stl 4x4Turn90_auto_0Y2.stl \
 	4x4Turn90_auto_0OA1.stl 4x4Turn90_auto_0OA2.stl \
@@ -46,6 +47,7 @@ STL1S=	3x1Straight_auto_1.stl \
 	3x3Straight_auto_1.stl \
 	3x3ChokePoint_auto_1.stl \
 	3x3Turn90_auto_1.stl \
+	3x3Turn90_turret0x0_auto_1.stl \
 	4x4Turn90_auto_1.stl \
 	4x4Turn90_auto_1Y1.stl 4x4Turn90_auto_1Y2.stl \
 	4x4Turn90_auto_1OA1.stl 4x4Turn90_auto_1OA2.stl \
@@ -96,6 +98,12 @@ allpng: $(STLS:.stl=.png) $(STL1S:.stl=.png) $(EXTRASTLS:.stl=.png) $(MORESTLS:.
 
 %_auto_1.scad: %.png gen_scad
 	./gen_scad -d $(DPI) -L 1 $<
+
+# 3x3 Turn90 with turret
+3x3Turn90_turret0x0_auto_0.scad: 3x3Turn90.png gen_scad
+	./gen_scad -d $(DPI) -t 0x0 $<
+3x3Turn90_turret0x0_auto_1.scad: 3x3Turn90.png gen_scad
+	./gen_scad -d $(DPI) -t 0x0 -L 1 $<
 
 ## some usefule split for easier printing
 # This one uses only 26 square inches instead of 36
@@ -295,6 +303,12 @@ PNGFilter_NxMStraightIntoBanking: PNGFilter_main.c PNGFilter_NxMStraightIntoBank
 # Procedurally generate PNG
 PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support.c
 	$(CC) $(CFLAGS) -fopenmp -DPNG_SYNTH -lpng -lgsl -lgslcblas -lm $^ -o $@
+
+1x1Nothing.png: PNGSynth
+	./PNGSynth $@ -l 1 -w 1
+
+3x3Nothing.png: PNGSynth
+	./PNGSynth $@ -l 3 -w 3
 
 1x3Straight.png: PNGSynth
 	./PNGSynth $@ -t 2 -f straight -l 1 -w 3

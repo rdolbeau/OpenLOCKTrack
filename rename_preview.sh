@@ -34,6 +34,7 @@ for L in 0 1; do
     update 3x3ChokePoint_auto_"$L".png $SUBDIR/TrackWidth2/EA-$DEV-W2ChokePoint-Lvl"$L"-v$VER.png
     
     update 3x3Turn90_auto_"$L".png $SUBDIR/TrackWidth2/EA-$DEV-W2Turn90-3-Lvl"$L"-v$VER.png
+    update 3x3Turn90_turret0x0_auto_"$L".png $SUBDIR/TrackWidth2/EA-$DEV-W2Turn90-3-Turret-Lvl"$L"-v$VER.png
     
     update 4x4Turn90_auto_"$L".png $SUBDIR/TrackWidth2/U-$DEV-W2Turn90-4-Lvl"$L"-v$VER.png
     update 4x4Turn90_auto_"$L"Y1.png $SUBDIR/TrackWidth2/Y-$DEV-W2Turn90-4Part1-Lvl"$L"-v$VER.png
