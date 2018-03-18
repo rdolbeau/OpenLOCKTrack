@@ -395,6 +395,41 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 2x2.5-2x5W4StraightPart2.png: 2x5W4Straight.png
 	convert $< -crop 240x300+0+300 $@
 
+# Width 1 (used for e.g. pits)
+1x3W1Straight.png: PNGSynth
+	./PNGSynth $@ -t 1 -w 3 -l 1 -f straight
+
+3x3StraightWidth2to1.png: PNGSynth
+	./PNGSynth $@ -t 1 -w 3 -l 3 -f straight -f side
+3x3StraightWidth1to2.png: PNGSynth
+	./PNGSynth $@ -t 1 -w 3 -l 3 -f straight -F -f side
+#3x3W1Side1.png: PNGSynth
+#	./PNGSynth $@ -t 1 -w 3 -l 3 -f side
+#3x3W1Side1L.png: PNGSynth
+#	./PNGSynth $@ -t 1 -w 3 -l 3 -F -f side
+
+4x5StraightW1Split.png: PNGSynth
+	./PNGSynth $@ -t 2 -w 5 -l 4 -f straight -F -t 1 -f offmiddleside
+2x2.5-4x5StraightW1SplitPart1.png: 4x5StraightW1Split.png
+	convert $< -crop 240x300+0+0 $@
+2x1.5-4x5StraightW1SplitPart2.png: 4x5StraightW1Split.png
+	convert $< -crop 240x180+0+300 $@
+2x2.5-4x5StraightW1SplitPart3.png: 4x5StraightW1Split.png
+	convert $< -crop 240x300+240+0 $@
+2x2.5-4x5StraightW1SplitPart4.png: 4x5StraightW1Split.png
+	convert $< -crop 240x300+240+300 $@
+
+4x5StraightW1SplitL.png: PNGSynth
+	./PNGSynth $@ -t 2 -w 5 -l 4 -f straight -F -M -t 1 -f offmiddleside
+2x2.5-4x5StraightW1SplitLPart1.png: 4x5StraightW1SplitL.png
+	convert $< -crop 240x300+0+0 $@
+2x2.5-4x5StraightW1SplitLPart2.png: 4x5StraightW1SplitL.png
+	convert $< -crop 240x300+0+300 $@
+2x2.5-4x5StraightW1SplitLPart3.png: 4x5StraightW1SplitL.png
+	convert $< -crop 240x300+240+0 $@
+2x1.5-4x5StraightW1SplitLPart4.png: 4x5StraightW1SplitL.png
+	convert $< -crop 240x180+240+300 $@
+
 #### useful stuff
 rename_preview.sh: rename.sh
 	cp -f rename.sh rename_preview.sh && sed -i -e 's/\.stl\.bz2/.png/g' -e 's/\.stl/.png/g' -e 's/SUBDIR=export/SUBDIR=previews/' -e 's/BZIP2="bzip2 -c"/BZIP2="cat"/' rename_preview.sh

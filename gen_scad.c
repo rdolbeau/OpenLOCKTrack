@@ -24,7 +24,7 @@ const openlockrect openlockrectdb[] = {
 	{4.,1.,"SB-TRP-v7.1.stl"},
 	{4.,2.,"R-TRP-v7.0.stl"},
 	{2.,2.5,"E+A-TRP-v7.0.stl"},
-	{1.5,2.,"EC-TRP-v7.0.stl"},
+	{2.,1.5,"EC-TRP-v7.0.stl"},
 	{-1.,-1.,NULL}
 };
 

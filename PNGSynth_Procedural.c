@@ -114,6 +114,16 @@ void init_middleside(fun_type* fun, double width, double length, double tw) {
         fun->params[3] = 0.5 + tw/2.;
 }
 
+void init_offmiddleside(fun_type* fun, double width, double length, double tw) {
+        fun->min = 0.;
+        fun->max = length;
+        fun->fun = &my_wavyline;
+        fun->params[0] = 0;
+        fun->params[1] = length;
+        fun->params[2] = width/2.+(tw/2.);
+        fun->params[3] = 0.5 + tw/2.;
+}
+
 track_fun all_track_fun[] = {
 	{ "straight", &init_topstraight }, /* straight line, 1/2" off the top */
 	{ "turn90", &init_quarterellipsis }, /* 90 deg turn, 1/2" off the top and side */
@@ -122,6 +132,7 @@ track_fun all_track_fun[] = {
 	{ "bottomhalfellipsis", &init_bottomsemiellipsis }, /* centered half-circle in the bottom half */
 	{ "middlestraight", &init_middlestraight }, /* straight line, in the middle */
 	{ "middleside", &init_middleside }, /* move from the middle to 1/2" off the bottom */
+	{ "offmiddleside", &init_offmiddleside }, /* move from adjacent to middle to 1/2" off the bottom */
 	{ "straighthalf", &init_topstraighthalf }, /* straight line, 1/2" off the top, stops in the middle; beware the rounded end */
 	{ "middlepoint", &init_middlepoint }, /* just the rounded bit */
 	{ "straight15", &init_topstraight15 }, /* straight line, 1+1/2" off the top */
