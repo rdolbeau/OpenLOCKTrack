@@ -12,6 +12,7 @@ mkdir -p $SUBDIR/TrackWidth2
 mkdir -p $SUBDIR/TrackWidth3
 mkdir -p $SUBDIR/TrackWidth4
 mkdir -p $SUBDIR/TrackWidthChange
+mkdir -p $SUBDIR/Pits
 
 update() {
     if test -e $1 -a \( \( \! -e $2  \) -o \( $1 -nt $2 \) \); then
@@ -107,6 +108,22 @@ for L in 0 1; do
     update 2x2.5-2x5W4StraightPart1_auto_"$L".png        $SUBDIR/TrackWidth4/E+A-$DEV-W4StraightPart1-Lvl"$L"-v$VER.png
     update 2x2.5-2x5W4StraightPart2_auto_"$L".png        $SUBDIR/TrackWidth4/E+A-$DEV-W4StraightPart2-Lvl"$L"-v$VER.png
 done
+
+# Pits
+## buildings + W1 lane
+update 1x3W1PitEntry.png $SUBDIR/Pits/SA-$DEV-PitEntry-Lvl0-v$VER.png
+update 1x3W1PitExit.png $SUBDIR/Pits/SA-$DEV-PitExit-Lvl0-v$VER.png
+update 3x3Pits.png $SUBDIR/Pits/EA-$DEV-Pits-Lvl0-v$VER.png
+## access
+update 2x2.5-4x5StraightW1SplitPart1_auto_0.png $SUBDIR/Pits/E+A-$DEV-W2StraightW1SplitPart1-Lvl"$L"-v$VER.png
+update 2x1.5-4x5StraightW1SplitPart2_auto_0.png $SUBDIR/Pits/EC-$DEV-W2StraightW1SplitPart2-Lvl"$L"-v$VER.png
+update 2x2.5-4x5StraightW1SplitPart3_auto_0.png $SUBDIR/Pits/E+A-$DEV-W2StraightW1SplitPart3-Lvl"$L"-v$VER.png
+update 2x2.5-4x5StraightW1SplitPart4_auto_0.png $SUBDIR/Pits/E+A-$DEV-W2StraightW1SplitPart4-Lvl"$L"-v$VER.png
+
+update 2x2.5-4x5StraightW1SplitLPart1_auto_0.png $SUBDIR/Pits/E+A-$DEV-W2StraightW1SplitLPart1-Lvl"$L"-v$VER.png
+update 2x2.5-4x5StraightW1SplitLPart2_auto_0.png $SUBDIR/Pits/E+A-$DEV-W2StraightW1SplitLPart2-Lvl"$L"-v$VER.png
+update 2x2.5-4x5StraightW1SplitLPart3_auto_0.png $SUBDIR/Pits/E+A-$DEV-W2StraightW1SplitLPart3-Lvl"$L"-v$VER.png
+update 2x1.5-4x5StraightW1SplitLPart4_auto_0.png $SUBDIR/Pits/EC-$DEV-W2StraightW1SplitLPart4-Lvl"$L"-v$VER.png
 
 # Ramps and the checkpoint and other not-by-layer stuff
 update 3x1CheckPoint.png $SUBDIR/TrackWidth2/SA-$DEV-W2CheckPoint-Lvl0-v$VER.png

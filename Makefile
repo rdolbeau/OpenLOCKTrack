@@ -76,7 +76,16 @@ EXTRASTLS=3x1CheckPoint.stl 3x1Ramp0_1.stl 3x1Ramp0_2.stl 3x1Ramp1_2.stl
 # Other-than-2 track size
 
 MORESTLS=2x4StraightWidth2to3_auto_0.stl 2x4StraightWidth2to3Left_auto_0.stl 2x4W3Straight_auto_0.stl 4x4W3Turn90_auto_0.stl \
-	2x4StraightWidth2to3_auto_1.stl 2x4StraightWidth2to3Left_auto_1.stl 2x4W3Straight_auto_1.stl 4x4W3Turn90_auto_1.stl
+	2x4StraightWidth2to3_auto_1.stl 2x4StraightWidth2to3Left_auto_1.stl 2x4W3Straight_auto_1.stl 4x4W3Turn90_auto_1.stl \
+	2x2.5-4x5StraightW1SplitLPart1_auto_0.stl \
+	2x2.5-4x5StraightW1SplitLPart2_auto_0.stl \
+	2x2.5-4x5StraightW1SplitLPart3_auto_0.stl \
+	2x1.5-4x5StraightW1SplitLPart4_auto_0.stl \
+	2x2.5-4x5StraightW1SplitPart1_auto_0.stl \
+	2x1.5-4x5StraightW1SplitPart2_auto_0.stl \
+	2x2.5-4x5StraightW1SplitPart3_auto_0.stl \
+	2x2.5-4x5StraightW1SplitPart4_auto_0.stl
+
 # 1x4W3Straight_auto_0.stl 1x4W3Straight_auto_1.stl # seems to have an issue in OpenSCAD (SB base ?)
 
 SCADS=$(STLS:.stl=.scad) $(STL1S:.stl=.scad) $(MORESTLS)
@@ -310,6 +319,9 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 3x3Nothing.png: PNGSynth
 	./PNGSynth $@ -l 3 -w 3
 
+3x3PitBase.png: PNGSynth
+	./PNGSynth $@ -l 3 -w 3 -t 3 -f straight
+
 1x3Straight.png: PNGSynth
 	./PNGSynth $@ -t 2 -f straight -l 1 -w 3
 
@@ -429,6 +441,18 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 	convert $< -crop 240x300+240+0 $@
 2x1.5-4x5StraightW1SplitLPart4.png: 4x5StraightW1SplitL.png
 	convert $< -crop 240x180+240+300 $@
+
+# Pits
+# scads are hand-written
+# Pit.scad
+# 3x3Pits.scad
+# 1x3W1PitEntry.scad
+# 1x3W1PitExit.scad
+# 3x3PitEntry.scad
+# 3x3PitExit.scad
+PITSSTLS=3x3Pits.stl 1x3W1PitEntry.stl 1x3W1PitExit.stl
+PITSPNGS=$(PITSSTLS:.stl=.png)
+allpits: $(PITSSTLS) $(PITSPNGS)
 
 #### useful stuff
 rename_preview.sh: rename.sh
