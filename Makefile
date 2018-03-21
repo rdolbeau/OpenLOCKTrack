@@ -450,6 +450,9 @@ PNGSynth: PNGFilter_main.c PNGSynth_gsl.c PNGSynth_Procedural.c PNGSynth_support
 # 1x3W1PitExit.scad
 # 3x3PitEntry.scad
 # 3x3PitExit.scad
+3x3Pits.stl: Pit.scad
+1x3W1PitEntry.stl: Pit.scad
+1x3W1PitExit.stl: Pit.scad
 PITSSTLS=3x3Pits.stl 1x3W1PitEntry.stl 1x3W1PitExit.stl
 PITSPNGS=$(PITSSTLS:.stl=.png)
 allpits: $(PITSSTLS) $(PITSPNGS)

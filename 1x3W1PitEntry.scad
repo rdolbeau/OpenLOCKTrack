@@ -34,7 +34,7 @@ union () {
   }
   translate (v =[0, -1.5 * myinch, 7]) {
     rotate (-90, v =[0, 0, 1]) {
-      mywallBBottom();
+      mywallBBottomCut();
     }
   }  
 }
