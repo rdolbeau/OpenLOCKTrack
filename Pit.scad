@@ -7,13 +7,14 @@ height = 1;
 
 angle = 15;
 depth = 1.5;
-wallwidth = 3;
-shave = 0.2;
+wallwidth = 3.5;
+shave = 0.3;
+pinsize=2.4;
 
 module
 myhalfpin () {
   intersection () {
-    translate(v=[0,0,-0.1]) cylinder (r1 = 2, r2 = 2, 2.8);
+    translate(v=[0,0,-0.1]) cylinder (r1 = 0.9*pinsize, r2 = 0.9*pinsize, 2.8);
     translate (v =[-5, -10, -5]) {
       cube (size =[10, 10.001, 10]);
     }
@@ -23,7 +24,7 @@ myhalfpin () {
 module
 mybiggerhalfpin () {
   intersection () {
-    translate(v=[0,0,-0.1]) { cylinder (r1 = 2.2, r2 = 2.2, 3); }
+    translate(v=[0,0,-0.1]) { cylinder (r1 = 1.1*pinsize, r2 = 1.1*pinsize, 3); }
     translate (v =[-5, -10, -5]) {
       cube (size =[10, 10.01, 10]);
     }
@@ -103,10 +104,11 @@ mywallATop (height) {
 		[[0, 1, 2, 3],[5, 4, 3, 2],[0, 4, 5, 1],[0, 3, 4],[5, 2, 1]],
 		convexity = 1);
   }
-  difference () {
+//  difference () {
     translate (v =[0, -wallwidth, myinch * 3 / 4]) {
       cube (size =[depth * myinch, wallwidth + 0.001, height + 0.001]);
     }
+    /*
     union () {
       translate (v =[1 / 8 * depth * myinch, 0, 3 / 4 * myinch]) {
 	mybiggerhalfpin ();
@@ -114,7 +116,7 @@ mywallATop (height) {
       translate (v =[7 / 8 * depth * myinch, 0, 3 / 4 * myinch]) {
 	mybiggerhalfpin ();
       }
-  }}
+  }}*/
 }
 
 module
@@ -178,6 +180,8 @@ myroof (size) {
     polyhedron (roofpoints, rooffaces);
   }
   
+  difference() {
+      union() {
 	mywallBTop (myinch/4);
 for (i =[0:size - 1]) {
     translate (v =[0, -myinch * i, 0]) {
@@ -191,6 +195,20 @@ for (i =[0:size - 1]) {
   translate (v =[0, -myinch*size, 0]) {
       mywallATop (myinch/4);
   }
+  }
+      render() union () {
+          for (i=[0:size]) {
+      translate (v =[1 / 8 * depth * myinch, -myinch*i, 3 / 4 * myinch]) {
+	mybiggerhalfpin ();
+          mirror (v =[0, 1, 0]) { mybiggerhalfpin (); }
+      }
+      translate (v =[7 / 8 * depth * myinch, -myinch*i, 3 / 4 * myinch]) {
+	mybiggerhalfpin ();
+          mirror (v =[0, 1, 0]) { mybiggerhalfpin (); }
+      }
+  }
+  }
+}
 }
 
 
@@ -218,9 +236,11 @@ myroofalt (size) {
 }
 }
 translate(v=[0,-size*myinch,0]) {
-cube(size=[depth*myinch,size*myinch,, 10 *myinch]);
+cube(size=[depth*myinch,size*myinch, 10 *myinch]);
 }
 }
+difference() {
+    union() {
 	mywallBTop (3);
 for (i =[0:size - 1]) {
     translate (v =[0, -myinch * i, 0]) {
@@ -234,11 +254,26 @@ for (i =[0:size - 1]) {
   translate (v =[0, -myinch*size, 0]) {
       mywallATop (3);
   }
+  }
+  render() union() {
+          for (i=[0:size]) {
+      translate (v =[1 / 8 * depth * myinch, -myinch*i, 3 / 4 * myinch]) {
+	mybiggerhalfpin ();
+          mirror (v =[0, 1, 0]) { mybiggerhalfpin (); }
+      }
+      translate (v =[7 / 8 * depth * myinch, -myinch*i, 3 / 4 * myinch]) {
+	mybiggerhalfpin ();
+          mirror (v =[0, 1, 0]) { mybiggerhalfpin (); }
+      }
+  }
+  }
+}
 }
 
 //mywallA();
 //mywallB();
 
+//myroof(3);
 //myroofalt(3);
 
 //mystand(3);

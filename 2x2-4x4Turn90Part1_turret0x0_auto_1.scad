@@ -26,4 +26,4 @@ translate (v=[0,-2.0*myinch,6.995]) {
 }
 }
 }
-translate(v=[-2+0*myinch,-15+(2-0)*myinch,7]) {scale(v=[2/3,2/3,2/3]) { import("death_star_assembly_1.1.stl");}}
+translate(v=[-2+0*myinch,-15+(2-0)*myinch,7+1*myinch/4]) {scale(v=[2/3,2/3,2/3]) { import("death_star_assembly_1.1.stl");}}

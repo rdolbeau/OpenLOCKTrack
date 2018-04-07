@@ -302,5 +302,14 @@ void synth(pngstruct *png, int argc, char **argv) {
 	// grid
 	if (dogrid)
 		grid(png, dpi);
+
+	// Make everything opaque
+        for (y=0; y<png->height; y++) {
+                png_byte* row = png->row_pointers[y];
+                for (x=0; x<png->width; x++) {
+                        png_byte* ptr = &(row[x*4]);
+			ptr[3] = 255;
+                }
+        }
 }
 #endif

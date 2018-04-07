@@ -2,6 +2,7 @@ CC=gcc
 CFLAGS=-O2 -Wall
 
 OPENSCAD=/usr/local/openscad-openscad-2015.03/bin/openscad
+OPENSCAD=/usr/local/openscad-openscad-git-64673e13a03b5a38e8a88a9b4be19e7f30c16f38/bin/openscad
 DPI=120
 
 .SECONDARY:
